@@ -1,0 +1,1 @@
+[[../ClassicBlog/From GAN to WGAN]]
