@@ -1,7 +1,7 @@
 #目标检测
+#centernet
 
 源自 [CornetNet](https://discuss.pytorch.org/t/discussion-about-the-paper-of-name-centernet/80658/2?u=hqabcxyxz)
-
 官方实现代码：
 ```python
 def gaussian_radius(det_size, min_overlap=0.7):
