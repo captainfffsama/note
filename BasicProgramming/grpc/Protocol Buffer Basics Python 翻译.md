@@ -1,4 +1,5 @@
 #protobuff 
+#待处理
 
 [原文](https://developers.google.com/protocol-buffers/docs/pythontutorial)  
 
@@ -15,3 +16,8 @@
 # 为何使用 Protocol Buffers?
 我们将创建一个类似"地址簿"的应用,它将从文件中读取联系人信息,这些信息包括人名,ID, 电子邮件地址和电话.   
 您会如何来序列化和检索这种结构数据呢? 有以下几个方式来解决这个问题:
+
+
+# 参考
+1. <https://www.kaifaxueyuan.com/basic/protobuf3/protocol-buffer-python-defining-your-protocol-format.html>
+2. <https://colobu.com/2015/01/07/Protobuf-language-guide/>
