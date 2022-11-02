@@ -1,5 +1,6 @@
 #python 
 #qt
+#pyqt
 
 [toc]
 
