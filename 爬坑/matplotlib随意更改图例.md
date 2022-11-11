@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/47391702/how-to-make-a-colored-markers-legend-from-scratch

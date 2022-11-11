@@ -70,6 +70,6 @@ Fig 5 显示了使用 Greedy coreset selection,random subsampling,学习一个�
 
 
 ## 精要总结
-训练阶段就是使用 WResnet50 提取所有训练图片特征,然后取block2,3 的输出作为特征,然后将所有图片所有 patch 的特征集合在一起,然后使用随机映射降维,对变化之后的特征使用 p 中值法,选出最具代表性的 N 个样本作为 core,将这些 core 作为 memorybank.
+训练阶段就是使用 WResnet50 提取所有训练图片特征,然后取block2,3 的输出作为特征,然后将所有图片所有 patch 的特征集合在一起,然后使用随机映射降维,对变化之后的特征使用 p 中值法(多用来解决工厂选址问题),选出最具代表性的 N 个样本作为 core,将这些 core 作为 memorybank.
 
 测试阶段,使用 resnet50-w 提取完特征之后,使用 K 近邻,算出待测的patch 和最近的 memorybank 中core 的距离.然后取最近的距离作为 anomaly map. 对最近距离的 patch 算出的 K 个距离求一个 softmax,将最近距离的权重乘上最近距离作为异常分数.
