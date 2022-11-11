@@ -1,7 +1,7 @@
 #python 
 #qt 
 
-[原文](https://doc.bccnsoft.com/docs/PyQt5/signals_slots.html)
+[原文](https://www.riverbankcomputing.com/static/Docs/PyQt5/signals_slots.html)
 
 [toc]
 Qt 的一个关键特性是它使用信号和插槽在对象之间进行通信。它们的使用鼓励了可重用组件的开发。
