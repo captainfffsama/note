@@ -66,3 +66,4 @@ if __name__=="__main__":
 
 # 其余参考文献
 - https://zhuanlan.zhihu.com/p/158886284
+- <https://pytorch.org/tutorials/beginner/ddp_series_theory.html>
