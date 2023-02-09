@@ -18,12 +18,12 @@
 - [Deep Unsupervised Image Hashing by Maximizing Bit Entropy](paper_note/Deep%20Unsupervised%20Image%20Hashing%20by%20Maximizing%20Bit%20Entropy.md)
 
 - [Image-and-Spatial Transformer Networksfor Structure-Guided Image Registration](paper_note/Image-and-Spatial%20Transformer%20Networksfor%20Structure-Guided%20Image%20Registration.md)
-- [unsupervised triplet hashing for fast image retrieval](unsupervised%20triplet%20hashing%20for%20fast%20image%20retrieval.md)
+- [unsupervised triplet hashing for fast image retrieval](paper_note/unsupervised%20triplet%20hashing%20for%20fast%20image%20retrieval.md)
 
 # 自监督
 - [Neural Outlier Rejection For Self-supervised Keypoint Learning](paper_note/Neural%20Outlier%20Rejection%20For%20Self-supervised%20Keypoint%20Learning.md)
-- [SuperPoint](SuperPoint.md)
-- [UnsuperPoint](UnsuperPoint.md)
+- [SuperPoint](paper_note/SuperPoint.md)
+- [UnsuperPoint](paper_note/UnsuperPoint.md)
 
 # 对比学习
 - [A Simple Framework for Contrastive Learning of Visual Representations](paper_note/A%20Simple%20Framework%20for%20Contrastive%20Learning%20of%20Visual%20Representations.md)
@@ -47,10 +47,10 @@
 
 - [Rethinking Assumptions in Deep Anomaly Detection](paper_note/Rethinking%20Assumptions%20in%20Deep%20Anomaly%20Detection.md)
 
-- [Sub-Image Anomaly Detection with Deep Pyramid Correspondences](Sub-Image%20Anomaly%20Detection%20with%20Deep%20Pyramid%20Correspondences.md)
+- [Sub-Image Anomaly Detection with Deep Pyramid Correspondences](paper_note/Sub-Image%20Anomaly%20Detection%20with%20Deep%20Pyramid%20Correspondences.md)
 
-- [Same Same But DifferNet: Semi-Supervised Defect Detection with Normalizing Flows](Same%20Same%20But%20DifferNet%20Semi-Supervised%20Defect%20Detection%20with%20Normalizing%20Flows.md)
-- [Towards Total Recall in Industrial Anomaly Detection](Towards%20Total%20Recall%20in%20Industrial%20Anomaly%20Detection.md)
+- [Same Same But DifferNet: Semi-Supervised Defect Detection with Normalizing Flows](paper_note/Same%20Same%20But%20DifferNet%20Semi-Supervised%20Defect%20Detection%20with%20Normalizing%20Flows.md)
+- [Towards Total Recall in Industrial Anomaly Detection](paper_note/Towards%20Total%20Recall%20in%20Industrial%20Anomaly%20Detection.md)
 
 
 
@@ -64,7 +64,7 @@
 # 图像检索
 - [Deep Unsupervised Image Hashing by Maximizing Bit Entropy](paper_note/Deep%20Unsupervised%20Image%20Hashing%20by%20Maximizing%20Bit%20Entropy.md)
 - [NetVLAD](paper_note/NetVLAD.md)
-- [unsupervised triplet hashing for fast image retrieval](unsupervised%20triplet%20hashing%20for%20fast%20image%20retrieval.md)
+- [unsupervised triplet hashing for fast image retrieval](paper_note/unsupervised%20triplet%20hashing%20for%20fast%20image%20retrieval.md)
 - [Greedy Hash-Towards Fast Optimization for Accurate Hash Coding in CNN](paper_note/Greedy%20Hash-Towards%20Fast%20Optimization%20for%20Accurate%20Hash%20Coding%20in%20CNN.md)
 - [Hashing with Angular Reconstructive Embeddings](paper_note/Hashing%20with%20Angular%20Reconstructive%20Embeddings.md)
 
@@ -75,13 +75,13 @@
 - [Neural Outlier Rejection For Self-supervised Keypoint Learning](paper_note/Neural%20Outlier%20Rejection%20For%20Self-supervised%20Keypoint%20Learning.md)
 - [SuperPoint](SuperPoint.md)
 - [UnsuperPoint](UnsuperPoint.md)
-- [Unsupervised Deep Image Stitching: Reconstructing Stitched Features to Images](Unsupervised%20Deep%20Image%20Stitching%20Reconstructing%20Stitched%20Features%20to%20Images.md)
+- [Unsupervised Deep Image Stitching: Reconstructing Stitched Features to Images](paper_note/Unsupervised%20Deep%20Image%20Stitching%20Reconstructing%20Stitched%20Features%20to%20Images.md)
 - [GOCor:Bringing Globally Optimized Correspondence Volumes into Your Neural Network](paper_note/GOCor_Bringing_Globally_Optimized_Correspondence_Volumes_into_Your_Neural_Network.md)
 - [Motion Basis Learning for Unsupervised Deep Homography Estimation with Subspace Projection](paper_note/Motion%20Basis%20Learning%20for%20Unsupervised%20Deep%20Homography%20Estimation%20with%20Subspace%20Projection.md)
 
 
 # 变化检测
-- [Weakly  Supervised  Silhouette-based  Semantic  Scene  Change  Detection](Weakly%20%20Supervised%20%20Silhouette-based%20%20Semantic%20%20Scene%20%20Change%20%20Detection.md)
+- [Weakly  Supervised  Silhouette-based  Semantic  Scene  Change  Detection](paper_note/Weakly%20%20Supervised%20%20Silhouette-based%20%20Semantic%20%20Scene%20%20Change%20%20Detection.md)
 
 # 目标跟踪
 - [SiamMOT Siamese Multi-Object Tracking](paper_note/SiamMOT%20Siamese%20Multi-Object%20Tracking.md)
