@@ -43,8 +43,8 @@ get_dataset_info ^po9WG0oC
 	"elements": [
 		{
 			"type": "text",
-			"version": 50,
-			"versionNonce": 662651638,
+			"version": 98,
+			"versionNonce": 2098947544,
 			"isDeleted": false,
 			"id": "R56JVYUa",
 			"fillStyle": "hachure",
@@ -53,8 +53,8 @@ get_dataset_info ^po9WG0oC
 			"roughness": 1,
 			"opacity": 100,
 			"angle": 0,
-			"x": -332.79998779296875,
-			"y": -265.28124237060547,
+			"x": -333.5272494229404,
+			"y": -271.0994186401367,
 			"strokeColor": "#000000",
 			"backgroundColor": "transparent",
 			"width": 432,
@@ -63,7 +63,7 @@ get_dataset_info ^po9WG0oC
 			"groupIds": [],
 			"roundness": null,
 			"boundElements": [],
-			"updated": 1677050038491,
+			"updated": 1677548517285,
 			"link": null,
 			"locked": false,
 			"fontSize": 16,
@@ -712,10 +712,10 @@ get_dataset_info ^po9WG0oC
 		"currentItemTextAlign": "left",
 		"currentItemStartArrowhead": null,
 		"currentItemEndArrowhead": "arrow",
-		"scrollX": 894.9513635571786,
-		"scrollY": 769.4349021659925,
+		"scrollX": 622.2961613144086,
+		"scrollY": 654.1405239046184,
 		"zoom": {
-			"value": 0.5999999999999996
+			"value": 1.1
 		},
 		"currentItemRoundness": "round",
 		"gridSize": null,
