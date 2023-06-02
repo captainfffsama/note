@@ -1,6 +1,7 @@
-**若使用github直接进行观看，请装`MathJax Plugin for Github`插件，使得公式可以正常显示，插件地址：<https://github.com/orsharir/github-mathjax>**
+**若使用 github 直接进行观看，请装 `MathJax Plugin for Github` 插件，使得公式可以正常显示，插件地址：<https://github.com/orsharir/github-mathjax>**
 
-**推荐`git clone` 下来在本地使用支持Latex公式的markdown编辑器进行浏览，比如[typora（要找破解版）](https://www.ghxi.com/typora.html),[marktext](https://github.com/marktext/marktext)，[obsidian](https://obsidian.md/)**
+**推荐 `git clone` 下来在本地使用支持 Latex 公式的 markdown 编辑器进行浏览，比如 [typora（要找破解版）](https://www.ghxi.com/typora.html),[marktext](https://github.com/marktext/marktext)，[obsidian](https://obsidian.md/)**
+
 # 目标检测
 
 - [Probabilistic two-stage detection](paper_note/Probabilistic%20two-stage%20detection.md)

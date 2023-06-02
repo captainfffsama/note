@@ -1,8 +1,9 @@
-#图像处理
-#代码片段
+#图像处理 #代码片段
 
 [toc]
+
 # 自用代码
+
 ```python
 import json
 import base64
@@ -102,10 +103,9 @@ if __name__=="__main__":
 
 ```
 
-
 # 几个注意点
 1. 点的对应关系一定要对
-2. 注意`estimateTransformation`中是 dst 在前,src 在后
+2. 注意 `estimateTransformation` 中是 dst 在前,src 在后
 # 相关资料
 - <https://blog.csdn.net/weixin_42028608/article/details/106128409>
 - <https://github.com/cheind/py-thin-plate-spline/blob/master/thinplate/pytorch.py>

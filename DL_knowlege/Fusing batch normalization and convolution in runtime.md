@@ -49,6 +49,7 @@ f^i,j\=WBN⋅(Wconv⋅fi,j+bconv)+bBN\\mathbf{\\hat{f}}\_{i,j}= \\mathbf{W}\_{BN
 Thus, we can replace these two layers by a single convolutional layer with the following parameters:
 
 *   filter weights: W\=WBN⋅Wconv\\mathbf{W}=\\mathbf{W}\_{BN}\\cdot \\mathbf{W}\_{conv};
+
 *   bias: b\=WBN⋅bconv+bBN\\mathbf{b}=\\mathbf{W}\_{BN}\\cdot\\mathbf{b}\_{conv}+\\mathbf{b}\_{BN}.
 
 Implementation in PyTorch
@@ -57,14 +58,19 @@ Implementation in PyTorch
 In Pytorch, each convolutional layer `conv` has the following parameters:
 
 *   filter weights, W\\mathbf{W}: `conv.weight`;
+
 *   bias, b\\mathbf{b}: `conv.bias`;
 
 and each BN layer `bn` layer has the following ones:
 
 *   scaling, γ\\gamma: `bn.weight`;
+
 *   shift, β\\beta: `bn.bias`;
+
 *   mean estiamte, μ^\\hat{\\mu}: `bn.running_mean`;
+
 *   variance estimate, σ^2\\hat{\\sigma}^2: `bn.running_var`;
+
 *   ϵ\\epsilon (for numerical stability): `bn.eps`.
 
 The following function takes as arguments two PyTorch layers, `nn.Conv2d` and `nn.BatchNorm2d`, and fuses them together into a single `nn.Conv2d` layer.

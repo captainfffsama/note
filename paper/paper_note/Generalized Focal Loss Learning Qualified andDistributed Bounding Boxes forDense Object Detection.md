@@ -1,6 +1,7 @@
 #目标检测 
 
 [toc]
+
 # Generalized Focal Loss: Learning Qualified andDistributed Bounding Boxes forDense Object Detection
 - 会议: NeurIPS2020
 - 代码: <https://github.com/implus/GFocal>

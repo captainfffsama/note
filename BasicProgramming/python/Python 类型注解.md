@@ -1,5 +1,4 @@
-#python
-#类型标注 
+#python #类型标注 
 
 [原文](https://www.gairuo.com/p/python-type-annotations)
 

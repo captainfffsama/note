@@ -14,11 +14,11 @@ Energy-based Out-of-distribution Detection
 
 **论文链接：** 
 
-https://arxiv.org/abs/2010.03759
+<https://arxiv.org/abs/2010.03759>
 
 **代码链接：** 
 
-https://github.com/wetliu/energy\_ood
+<https://github.com/wetliu/energy\_ood>
 
 ![](https://mmbiz.qpic.cn/mmbiz_png/Psho9dm7oDHKVtfYDubjKdZRUjAfBQQicF9W4GratnjUc2u6C9rYob1Hv7ebEE1y0fPnNXHJLqK0r0MF65IVvzg/640?wx_fmt=png)
 
@@ -26,7 +26,7 @@ https://github.com/wetliu/energy\_ood
 
 当机器学习模型看到与其训练数据不同的输入时，就会出现 out-of-distribution （OOD）uncertainty，因此模型很难对他们进行正确预测（也即在与训练数据分布差距较大的数据点上表现极差）。对于将 ML 应用于安全关键的应用（如罕见疾病鉴定）而言，确定输入是否超出了分布范围是一个基本问题。
 
-OOD（Out-of-distribution）检测的传统方法之一是基于 softmax confidence。直觉上来看，对于 in distribution 的数据点，我们有高可信度给他们一个结果（就分类问题而言即将一张猫的图片分类为“猫”的概率很高），**那么可信度低的就是 OOD inputs**。但是因为 DNN 在样本空间的过拟合，经常会对OOD的样本（比如对抗样本）一个很高的可信度。
+OOD（Out-of-distribution）检测的传统方法之一是基于 softmax confidence。直觉上来看，对于 in distribution 的数据点，我们有高可信度给他们一个结果（就分类问题而言即将一张猫的图片分类为“猫”的概率很高），**那么可信度低的就是 OOD inputs**。但是因为 DNN 在样本空间的过拟合，经常会对 OOD 的样本（比如对抗样本）一个很高的可信度。
 
 另一种检测方法是基于生成模型的，这类方法从生成建模的角度推导出似然分数 ，主要利用 Variational Autoencoder 的 reconstruction error 或者其他度量方式来判断一个样本是否属于 ID 或 OOD 样本。主要的假设是，Autoencoder 的隐含空间（latent space）能够学习出 ID 数据的明显特征 (silent vector)，而对于 OOD 样本则不行，因此 OOD 样本会产生较高的  reconstruction error。这类方法的缺点在于生成模型难以优化而且不稳定，因为它需要对样本空间的归一化密度进行估计。
 
@@ -60,7 +60,7 @@ OOD（Out-of-distribution）检测的传统方法之一是基于 softmax confide
 
 ![](https://mmbiz.qpic.cn/mmbiz_png/Psho9dm7oDHKVtfYDubjKdZRUjAfBQQicWok9zL9F1SkDEB5Yxl0m5G6NFHYp4FTgfHKU0MzibmiaYONMcNicwpKQg/640?wx_fmt=png)
 
-**基于能量的OOD检测**
+**基于能量的 OOD 检测**
 
 我们知道 OOD detection 实际上就是一个二分类问题，判别模型的密度函数可以写作：
 
@@ -101,8 +101,11 @@ OOD（Out-of-distribution）检测的传统方法之一是基于 softmax confide
 实验中有一点需要注意，作者采用了两个 setting：
 
 *   No fine-tune: 使用 backbone 的输出，只是将 softmax confidence 换成能量得分。注意样本的能量我们定义为 ，其中 即 backbone 的第 维输出。
+
     
+
 *   Fine-tune：使用上述的损失函数对 backbone 进行 fine-tune，然后使用 energy score 进行 OOD 检测。
+
     
 
 实验统一使用 WideResNet 作为预训练分类模型，在六种 OOD 数据集上的表现如下，可以看到在不进行 fine-tune 的情况下基本碾压了基于 softmax confidence 的方法。有 fine-tune 的情况下，也比目前的 sota-OE 好很多。不过这里需要指出表格中标注的 应该指的是训练集，因为作者也提到了下表是“We use WideResNet to train on the in-distribution dataset CIFAR-10.”。

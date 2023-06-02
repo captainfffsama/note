@@ -1,6 +1,6 @@
 [原文](http://www.liuxiao.org/2019/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%EF%BC%9Anetvlad-cnn-architecture-for-weakly-supervised-place-recognition/)
 
-NetVLAD1是一个较早的使用 CNN 来进行图像检索或者视频检索的工作，后续在此工作的基础上陆续出了很多例如 NetRVLAD、NetFV、NetDBoW 等等的论文，思想都是大同小异。
+NetVLAD1 是一个较早的使用 CNN 来进行图像检索或者视频检索的工作，后续在此工作的基础上陆续出了很多例如 NetRVLAD、NetFV、NetDBoW 等等的论文，思想都是大同小异。
 
 VLAD 和 BoW、Fisher Vector 等都是图像检索领域的经典方法，这里仅简介下图像检索和 VLAD 的基本思想。
 
@@ -12,7 +12,7 @@ VLAD 和 BoW、Fisher Vector 等都是图像检索领域的经典方法，这里
 
 3、则我们获得的欧氏距离 d(q,I)\=∥f(q)−f(I)∥ d(q, I) = \\parallel  f(q) - f(I)\\parallel 应该满足越相近的图像 d(q,I) d(q, I) 越小。
 
-而 VLAD （Vector of Locally Aggregated Descriptors）则是图像检索中一个经典方法，也就可以理解为怎么获得上述的 f f 的方法，记为 fVLAD f\_{VLAD}。通常在传统方法中我们会获得一系列的局部特征（SIFT、SURF、ORB）之类，假设为 N 个 D 维的局部特征（通常 N 可能比较大，而且每幅图特征多少不一，N 可能数量也不一定），我们希望通过这 N\*D 维特征获得一个可以表示图像全局 K\*D 维特征的方法（通常K是我们指定的数目，例如128维）。VLAD 的主要流程如下：
+而 VLAD （Vector of Locally Aggregated Descriptors）则是图像检索中一个经典方法，也就可以理解为怎么获得上述的 f f 的方法，记为 fVLAD f\_{VLAD}。通常在传统方法中我们会获得一系列的局部特征（SIFT、SURF、ORB）之类，假设为 N 个 D 维的局部特征（通常 N 可能比较大，而且每幅图特征多少不一，N 可能数量也不一定），我们希望通过这 N\*D 维特征获得一个可以表示图像全局 K\*D 维特征的方法（通常 K 是我们指定的数目，例如 128 维）。VLAD 的主要流程如下：
 
 1、对全部 N\*D 维局部特征进行 K-Means 聚类获得 K 个聚类中心，记为 Ck C\_k
 
@@ -20,7 +20,7 @@ VLAD 和 BoW、Fisher Vector 等都是图像检索领域的经典方法，这里
 
 V(j,k)\=∑i\=1Nak(xi)(xi(j)−ck(j)) V(j, k) = \\sum\_{i=1}^N a\_k(x\_i) (x\_i(j) - c\_k(j))
 
-其中 xi x\_i 为第i个局部图像特征，ck c\_k 为第k个聚类中心，xi x\_i 和 ck c\_k 都是 D 维向量。ak(xi) a\_k(x\_i) 是一个符号函数，当且仅当 xi x\_i 属于聚类中心 ck c\_k 时，ak(xi)\=1 a\_k(x\_i)=1 ，否则 ak(xi)\=0 a\_k(x\_i)=0。
+其中 xi x\_i 为第 i 个局部图像特征，ck c\_k 为第 k 个聚类中心，xi x\_i 和 ck c\_k 都是 D 维向量。ak(xi) a\_k(x\_i) 是一个符号函数，当且仅当 xi x\_i 属于聚类中心 ck c\_k 时，ak(xi)\=1 a\_k(x\_i)=1 ，否则 ak(xi)\=0 a\_k(x\_i)=0。
 
 经过上面对于经典 VLAD 方法的解释，我们可以看出来 fVLAD f\_{VLAD} 是一个将若干局部特征压缩为一个特定大小全局特征的方法，通过聚类，实现了将特征降维，同时用特征与聚类中心的差值作为新的特征值，在实践中 VLAD 方法具有较好的检索效果。
 
@@ -52,7 +52,7 @@ V(j,k)\=∑i\=1NewkTxi+bk∑k′ewk′T+bk′(xi(j)−ck(j)) V(j, k) = \\sum\_{i
 
 ![](http://cdn.liuxiao.org/wp-content/uploads/2019/02/Screenshot-from-2019-02-19-16-38-47.png?x-oss-process=image/resize,m_fill,w_990,h_656#)
 
-传统 VLAD 的中心是聚类出来的，没有监督的标签数据 ckVLAD c\_k^{VLAD} ，在聚类时我们使用了很多图像这些图像的描述符之间没有关系，那么也就很可能把本来不是一个物体的描述符聚为一类，使得我们原本期望的类内描述符都是一个物体的feature不太容易达到。而在使用监督数据进行训练时，我们可以已知图像数据属于同一物体，那么训练时就可以只把属于同一物体的特征聚在一起而把不是的划分到其他类别，这样就可能学习出一个更好的 ckNetVLAD c\_k^{NetVLAD} 聚类中心，使得最终的特征更有区分度。
+传统 VLAD 的中心是聚类出来的，没有监督的标签数据 ckVLAD c\_k^{VLAD} ，在聚类时我们使用了很多图像这些图像的描述符之间没有关系，那么也就很可能把本来不是一个物体的描述符聚为一类，使得我们原本期望的类内描述符都是一个物体的 feature 不太容易达到。而在使用监督数据进行训练时，我们可以已知图像数据属于同一物体，那么训练时就可以只把属于同一物体的特征聚在一起而把不是的划分到其他类别，这样就可能学习出一个更好的 ckNetVLAD c\_k^{NetVLAD} 聚类中心，使得最终的特征更有区分度。
 
 3、网络实现
 ------
@@ -67,13 +67,13 @@ V(j,k)\=∑i\=1NewkTxi+bk∑k′ewk′T+bk′(xi(j)−ck(j)) V(j, k) = \\sum\_{i
 
 ![](http://cdn.liuxiao.org/wp-content/uploads/2019/02/Screen-Shot-2019-02-20-at-11.32.06.png?x-oss-process=image/resize,m_fill,w_2240,h_1432#)
 
-1、实现 zk\=wkTxi+bk z\_k=w\_k^Tx\_i+b\_k，也就是公式中的蓝色部分，论文里直接通过一个1x1的卷积来做。这也是1x1卷积的一个应用；
+1、实现 zk\=wkTxi+bk z\_k=w\_k^Tx\_i+b\_k，也就是公式中的蓝色部分，论文里直接通过一个 1x1 的卷积来做。这也是 1x1 卷积的一个应用；
 
 2、实现 σk(z)\=ezk∑k′ezk′ \\sigma\_k (z)=\\frac{e^{z\_k}}{\\sum\_{{k}'} e^{z\_{{k}'}} }，也就是公式中的黄色部分，如之前所述这实际上就是一个 softmax 公式，论文里直接通过一个 softmax 来做；
 
-3、实现 xi(j)−ck(j) x\_i (j)- c\_k(j)，也就是公式中的绿色部分，这部分就是一个减法，直接用一个 VLAD core来做；
+3、实现 xi(j)−ck(j) x\_i (j)- c\_k(j)，也就是公式中的绿色部分，这部分就是一个减法，直接用一个 VLAD core 来做；
 
-4、1~3已经实现了 V(j,k) V(j,k) 的计算了，后面按照 All about VLAD 论文还要对 V(j,k) V(j,k) 做两步简单的归一化（这篇论文证明了归一化可以提升检索性能），包括：
+4、1~3 已经实现了 V(j,k) V(j,k) 的计算了，后面按照 All about VLAD 论文还要对 V(j,k) V(j,k) 做两步简单的归一化（这篇论文证明了归一化可以提升检索性能），包括：
 
 1）intra-normalization
 
@@ -91,7 +91,7 @@ V(j,k)\=∑i\=1NewkTxi+bk∑k′ewk′T+bk′(xi(j)−ck(j)) V(j, k) = \\sum\_{i
 2、弱监督 triplet ranking loss
 --------------------------
 
-我们将整个网络看做一个特征提取函数 fθ f\_{\\theta} ，那我们的目标自然就是：对于一个需要检索的图像 q q ，我们有一个数据库 I I，我们希望位置最近的图片Ii∗ I\_{i\*} 的特征欧氏距离，比其他所有图片Ii I\_{i} 的距离都要小：
+我们将整个网络看做一个特征提取函数 fθ f\_{\\theta} ，那我们的目标自然就是：对于一个需要检索的图像 q q ，我们有一个数据库 I I，我们希望位置最近的图片 Ii∗ I\_{i\*} 的特征欧氏距离，比其他所有图片 Ii I\_{i} 的距离都要小：
 
 dθ(q,Ii∗)<dθ(q,Ii) d\_{\\theta}(q, I\_{i\*}) < d\_{\\theta}(q, I\_i)
 
@@ -107,7 +107,7 @@ pi∗q\=argminpiqdθ(q,piq) p\_{i\*}^q=\\underset{p\_i^q}{argmin}d\_{\\theta}(q,
 
 Lθ\=∑jl(min⁡idθ2(q,piq)+m−dθ2(q,njq)) L\_{\\theta}=\\underset{j}{\\sum}l\\left ( \\underset{i}{\\min} d\_{\\theta}^2 (q,p\_i^q)+m-d\_{\\theta}^2(q,n\_j^q)\\right )
 
-其中 l(x)\=max(x,0) l(x)=max(x,0) 也就是所说的 hinge loss，m是一个常量表示我们给负样本设置的 margin。这个 loss 与 triplet loss 是很像的。
+其中 l(x)\=max(x,0) l(x)=max(x,0) 也就是所说的 hinge loss，m 是一个常量表示我们给负样本设置的 margin。这个 loss 与 triplet loss 是很像的。
 
 3、训练&实现
 -------
@@ -130,4 +130,5 @@ Lθ\=∑jl(min⁡idθ2(q,piq)+m−dθ2(q,njq)) L\_{\\theta}=\\underset{j}{\\sum}
 
 1.  1.
     
+
     Arandjelovic R, Gronát P, Torii A, Tomás Pajdla, Sivic J. NetVLAD: CNN architecture for weakly supervised place recognition. _CoRR_. 2015;abs/1511.07247.

@@ -3,8 +3,8 @@
 # DEKR: Bottom-Up Human Pose Estimation Via Disentangled Keypoint Regression
 
 - 会议: CVPR2021
-- 文章: https://arxiv.org/abs/2104.02300
-- 代码: https://github.com/HRNet/DEKR
+- 文章: <https://arxiv.org/abs/2104.02300>
+- 代码: <https://github.com/HRNet/DEKR>
 
 随着深度学习的发展，运用计算机视觉中的人体姿态估计技术已经能够高精度地从人体的图片中检测出人体关键点，并恢复人体位姿。在应用端，此技术也已经在人机交互、影视制作、运动分析、游戏娱乐等各领域大放异彩。
 
@@ -18,9 +18,9 @@
 
 ![](https://www.msra.cn/wp-content/uploads/2021/06/cvpr-2021-dekr-1.png)
 
-论文地址：https://arxiv.org/pdf/2104.02300.pdf
+论文地址：<https://arxiv.org/pdf/2104.02300.pdf>
 
-代码地址：https://github.com/HRNet/DEKR
+代码地址：<https://github.com/HRNet/DEKR>
 
 DEKR 方法有两个关键：
 
@@ -139,10 +139,10 @@ _表 5：不同的骨干网络下的结果，“D-32”表示使用了 HRNet-W32
 1. 文章中说分了 17 个分支，而代码中的 NUM_CHANNELS_PERKPT =15 是什么参数？  
    这只是随便设置的一个中间的超参
 2. HRNet 中所有卷积都没有 bias,为何?
-   很多 cbr 结构都不要 bias,bn 前使用 偏置没有意义,参见[杂坑](../../爬坑/杂坑.md#^6d6d93)
+   很多 cbr 结构都不要 bias,bn 前使用 偏置没有意义,参见 [杂坑](../../爬坑/杂坑.md#^6d6d93)
 
-3. 为何 heatmap 的通道数是 kp 点数+1?
-   参加 `CrowdPoseKeypoints` 类 heatmap 通道是`self.num_joints_with_center = self.num_joints+1`,即添加了一个中心点,中心点是 各个标注了的点的座标的平均值
+3. 为何 heatmap 的通道数是 kp 点数 +1?
+   参加 `CrowdPoseKeypoints` 类 heatmap 通道是 `self.num_joints_with_center = self.num_joints+1`,即添加了一个中心点,中心点是 各个标注了的点的座标的平均值
 4.
 
 # 自适应卷积实现:
@@ -199,4 +199,4 @@ class AdaptBlock(nn.Module):
 
 # 相关参考资料
 
-- https://www.bilibili.com/read/cv12646511
+- <https://www.bilibili.com/read/cv12646511>
