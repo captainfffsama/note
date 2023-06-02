@@ -94,3 +94,5 @@
 - [DEKR:Bottom-Up Human Pose Estimation Via Disentangled Keypoint Regression](paper_note/DEKR_Bottom-Up%20Human%20Pose%20Estimation%20Via%20Disentangled%20Keypoint%20Regression.md)
 
 # 音频分类
+- [HTS-AT: A Hierarchical Token-Semantic Audio Transformer for Sound Classification and Detection](paper_note/HTS-AT_A%20Hierarchical%20Token-Semantic%20Audio%20Transformer%20for%20Sound%20Classification%20and%20Detection.md)
+- 
