@@ -96,4 +96,6 @@
 
 # 音频分类
 - [HTS-AT: A Hierarchical Token-Semantic Audio Transformer for Sound Classification and Detection](paper_note/HTS-AT_A%20Hierarchical%20Token-Semantic%20Audio%20Transformer%20for%20Sound%20Classification%20and%20Detection.md)
-- 
+
+# 基础模型
+- [An Image is Worth 16x16 Words:Transformers for Image Recognition at Scale](paper_note/An%20Image%20is%20Worth%2016x16%20Words%20Transformers%20for%20Image%20Recognition%20at%20Scale.md)

@@ -2,46 +2,45 @@
 
 [toc]
 
-# PyTorch消除训练瓶颈 提速技巧
+# PyTorch 消除训练瓶颈 提速技巧
 
+【GiantPandaCV 导读】训练大型的数据集的速度受很多因素影响，由于数据集比较大，每个优化带来的时间提升就不可小觑。硬件方面，CPU、内存大小、GPU、机械硬盘 orSSD 存储等都会有一定的影响。软件实现方面，PyTorch 本身的 DataLoader 有时候会不够用，需要额外操作，比如使用混合精度、数据预读取、多线程读取数据、多卡并行优化等策略也会给整个模型优化带来非常巨大的作用。那什么时候需要采取这篇文章的策略呢？那就是明明 GPU 显存已经占满，但是显存的利用率很低。
 
-【GiantPandaCV导读】训练大型的数据集的速度受很多因素影响，由于数据集比较大，每个优化带来的时间提升就不可小觑。硬件方面，CPU、内存大小、GPU、机械硬盘orSSD存储等都会有一定的影响。软件实现方面，PyTorch本身的DataLoader有时候会不够用，需要额外操作，比如使用混合精度、数据预读取、多线程读取数据、多卡并行优化等策略也会给整个模型优化带来非常巨大的作用。那什么时候需要采取这篇文章的策略呢？那就是明明GPU显存已经占满，但是显存的利用率很低。
-
-本文将搜集到的资源进行汇总，由于目前笔者训练的GPU利用率已经很高，所以并没有实际实验，可以在参考文献中看一下其他作者做的实验。同时感谢作者群各位大佬的指点。
-
+本文将搜集到的资源进行汇总，由于目前笔者训练的 GPU 利用率已经很高，所以并没有实际实验，可以在参考文献中看一下其他作者做的实验。同时感谢作者群各位大佬的指点。
 
 ## 1. 硬件层面
 
 **CPU**的话尽量看主频比较高的，缓存比较大的，核心数也是比较重要的参数。
 
-**显卡**尽可能选现存比较大的，这样才能满足大batch训练，多卡当让更好。
+**显卡**尽可能选现存比较大的，这样才能满足大 batch 训练，多卡当让更好。
 
-**内存**要求64G，4根16G的内存条插满绝对够用了。
+**内存**要求 64G，4 根 16G 的内存条插满绝对够用了。
 
-**主板**性能也要跟上，否则装再好的CPU也很难发挥出全部性能。
+**主板**性能也要跟上，否则装再好的 CPU 也很难发挥出全部性能。
 
-**电源**供电要充足，GPU运行的时候会对功率有一定要求，全力运行的时候如果电源供电不足对性能影响还是比较大的。
+**电源**供电要充足，GPU 运行的时候会对功率有一定要求，全力运行的时候如果电源供电不足对性能影响还是比较大的。
 
-**存储**如果有条件，尽量使用SSD存放数据，SSD和机械硬盘的在训练的时候的读取速度不是一个量级。笔者试验过，相同的代码，将数据移动到SSD上要比在机械硬盘上快10倍。
+**存储**如果有条件，尽量使用 SSD 存放数据，SSD 和机械硬盘的在训练的时候的读取速度不是一个量级。笔者试验过，相同的代码，将数据移动到 SSD 上要比在机械硬盘上快 10 倍。
 
-**操作系统**尽量用Ubuntu就可以（实验室用）
+**操作系统**尽量用 Ubuntu 就可以（实验室用）
 
-如何实时查看Ubuntu下各个资源利用情况呢？
+如何实时查看 Ubuntu 下各个资源利用情况呢？
 
-*   GPU使用 watch -n 1 nvidia-smi 来动态监控
-*   IO情况，使用iostat命令来监控
-*   CPU情况，使用htop命令来监控
+*   GPU 使用 watch -n 1 nvidia-smi 来动态监控
+
+*   IO 情况，使用 iostat 命令来监控
+
+*   CPU 情况，使用 htop 命令来监控
 
 > 笔者对硬件了解很有限，欢迎补充，如有问题轻喷。
 
 ## 2. 如何测试训练过程的瓶颈
 
-
-如果现在程序运行速度很慢，那应该如何判断瓶颈在哪里呢？PyTorch中提供了工具，非常方便的可以查看设计的代码在各个部分运行所消耗的时间。
+如果现在程序运行速度很慢，那应该如何判断瓶颈在哪里呢？PyTorch 中提供了工具，非常方便的可以查看设计的代码在各个部分运行所消耗的时间。
 
 > 瓶颈测试：[https://pytorch.org/docs/stable/bottleneck.html](https://link.zhihu.com/?target=https%3A//pytorch.org/docs/stable/bottleneck.html)
 
-可以使用PyTorch中bottleneck工具，具体使用方法如下：
+可以使用 PyTorch 中 bottleneck 工具，具体使用方法如下：
 
 ```cfengine3
 python -m torch.utils.bottleneck /path/to/source/script.py [args]
@@ -49,15 +48,15 @@ python -m torch.utils.bottleneck /path/to/source/script.py [args]
 
 详细内容可以看上面给出的链接。
 
-当然，也可用cProfile这样的工具来测试瓶颈所在,先运行以下命令。
+当然，也可用 cProfile 这样的工具来测试瓶颈所在,先运行以下命令。
 
 ```text
 python -m cProfile -o 100_percent_gpu_utilization.prof train.py
 ```
 
-这样就得到了文件100\_percent\_gpu\_utilization.prof
+这样就得到了文件 100\_percent\_gpu\_utilization.prof
 
-对其进行可视化（用到了snakeviz包，pip install snakeviz即可）
+对其进行可视化（用到了 snakeviz 包，pip install snakeviz 即可）
 
 ```text
 snakeviz 100_percent_gpu_utilization.prof
@@ -97,40 +96,37 @@ def test_loss_profiling():
 
 ## 3. 图片解码
 
-
-PyTorch中默认使用的是Pillow进行图像的解码，但是其效率要比Opencv差一些，如果图片全部是JPEG格式，可以考虑使用TurboJpeg库解码。具体速度对比如下图所示：
+PyTorch 中默认使用的是 Pillow 进行图像的解码，但是其效率要比 Opencv 差一些，如果图片全部是 JPEG 格式，可以考虑使用 TurboJpeg 库解码。具体速度对比如下图所示：
 
 ![](https://pic3.zhimg.com/v2-71abe6e404436cace2dfa6cee296d75e_b.jpg)
 
-对于jpeg读取也可以考虑使用jpeg4py库（pip install jpeg4py）,重写一个loader即可。
+对于 jpeg 读取也可以考虑使用 jpeg4py 库（pip install jpeg4py）,重写一个 loader 即可。
 
-存bmp图也可以降低解码耗时，其他方案还有recordIO,hdf5,pth,n5,lmdb等格式
+存 bmp 图也可以降低解码耗时，其他方案还有 recordIO,hdf5,pth,n5,lmdb 等格式
 
 ## 4. 数据增强加速
 
+在 PyTorch 中，通常使用 transformer 做图片分类任务的数据增强，而其调用的是 CPU 做一些 Crop、Flip、Jitter 等操作。
 
-在PyTorch中，通常使用transformer做图片分类任务的数据增强，而其调用的是CPU做一些Crop、Flip、Jitter等操作。
+如果你通过观察发现你的 CPU 利用率非常高，GPU 利用率比较低，那说明瓶颈在于 CPU 预处理，可以使用 Nvidia 提供的 DALI 库在 GPU 端完成这部分数据增强操作。
 
-如果你通过观察发现你的CPU利用率非常高，GPU利用率比较低，那说明瓶颈在于CPU预处理，可以使用Nvidia提供的DALI库在GPU端完成这部分数据增强操作。
-
-> Dali链接：[https://github.com/NVIDIA/DALI](https://link.zhihu.com/?target=https%3A//github.com/NVIDIA/DALI)
+> Dali 链接：[https://github.com/NVIDIA/DALI](https://link.zhihu.com/?target=https%3A//github.com/NVIDIA/DALI)
 
 文档也非常详细：
 
-> Dali文档：[https://docs.nvidia.com/deeplearning/sdk/dali-developer-guide/index.html](https://link.zhihu.com/?target=https%3A//docs.nvidia.com/deeplearning/sdk/dali-developer-guide/index.html)
+> Dali 文档：[https://docs.nvidia.com/deeplearning/sdk/dali-developer-guide/index.html](https://link.zhihu.com/?target=https%3A//docs.nvidia.com/deeplearning/sdk/dali-developer-guide/index.html)
 
-当然，Dali提供的操作比较有限，仅仅实现了常用的方法，有些新的方法比如cutout需要自己搞。
+当然，Dali 提供的操作比较有限，仅仅实现了常用的方法，有些新的方法比如 cutout 需要自己搞。
 
 具体实现可以参考这一篇：[https://zhuanlan.zhihu.com/p/77633542](https://zhuanlan.zhihu.com/p/77633542)
 
 ## 5. data Prefetch
 
-
-**Nvidia Apex中提供的解决方案**
+**Nvidia Apex 中提供的解决方案**
 
 > 参考来源：[https://zhuanlan.zhihu.com/p/66145913](https://zhuanlan.zhihu.com/p/66145913)
 
-Apex提供的策略就是预读取下一次迭代需要的数据。
+Apex 提供的策略就是预读取下一次迭代需要的数据。
 
 ```text
 class data_prefetcher():
@@ -190,7 +186,7 @@ while data is not None:
     data, label = prefetcher.next()
 ```
 
-**用prefetch库实现**
+**用 prefetch 库实现**
 
 > [https://zhuanlan.zhihu.com/p/97190313](https://zhuanlan.zhihu.com/p/97190313)
 
@@ -212,9 +208,9 @@ class DataLoaderX(DataLoader):
         return BackgroundGenerator(super().__iter__())
 ```
 
-然后用`DataLoaderX`替换原本的`DataLoader`
+然后用 `DataLoaderX` 替换原本的 `DataLoader`
 
-**cuda.Steam加速拷贝过程**
+**cuda.Steam 加速拷贝过程**
 
 > [https://zhuanlan.zhihu.com/p/97190313](https://zhuanlan.zhihu.com/p/97190313)
 
@@ -483,48 +479,63 @@ if __name__ =='__main__':
   print "Training done"
 ```
 
-## 6. 多GPU并行处理
+## 6. 多 GPU 并行处理
 
+PyTorch 中提供了分布式训练 API, nn.DistributedDataParallel, 推理的时候也可以使用 nn.DataParallel 或者 nn.DistributedDataParallel。
 
-PyTorch中提供了分布式训练API, nn.DistributedDataParallel, 推理的时候也可以使用nn.DataParallel或者nn.DistributedDataParallel。
-
-推荐一个库，里面实现了多种分布式训练的demo: [https://github.com/tczhangzhi/pytorch-distributed](https://link.zhihu.com/?target=https%3A//github.com/tczhangzhi/pytorch-distributed) 其中包括：
+推荐一个库，里面实现了多种分布式训练的 demo: [https://github.com/tczhangzhi/pytorch-distributed](https://link.zhihu.com/?target=https%3A//github.com/tczhangzhi/pytorch-distributed) 其中包括：
 
 *   nn.DataParallel
+
 *   torch.distributed
+
 *   torch.multiprocessing
-*   apex再加速
-*   horovod实现
-*   slurm GPU集群分布式
+
+*   apex 再加速
+
+*   horovod 实现
+
+*   slurm GPU 集群分布式
 
 ## 7. 混合精度训练
 
+mixed precision yyds，之前分享过 mixed precision 论文阅读，实现起来非常简单。在 PyTorch 中，可以使用 Apex 库。如果用的是最新版本的 PyTorch，其自身已经支持了混合精度训练，非常 nice。
 
-mixed precision yyds，之前分享过mixed precision论文阅读，实现起来非常简单。在PyTorch中，可以使用Apex库。如果用的是最新版本的PyTorch，其自身已经支持了混合精度训练，非常nice。
-
-简单来说，混合精度能够让你在精度不掉的情况下，batch提升一倍。其原理就是将原先float point32精度的数据变为float point16的数据，不管是数据传输还是训练过程，都极大提升了训练速度，炼丹必备。
+简单来说，混合精度能够让你在精度不掉的情况下，batch 提升一倍。其原理就是将原先 float point32 精度的数据变为 float point16 的数据，不管是数据传输还是训练过程，都极大提升了训练速度，炼丹必备。
 
 ## 8. 其他细节
-
 
 ```text
 batch_images = batch_images.pin_memory() 
 Batch_labels = Variable(batch_labels).cuda(non_blocking=True) 
 ```
 
-*   PyTorch的DataLoader有一个参数pin\_memory，使用固定内存，并使用non\_blocking=True来并行处理数据传输。  
+*   PyTorch 的 DataLoader 有一个参数 pin\_memory，使用固定内存，并使用 non\_blocking=True 来并行处理数据传输。  
+
     
+
 *   torch.backends.cudnn.benchmark=True  
+
     
-*   及时释放掉不需要的显存、内存。  
+
+* 及时释放掉不需要的显存、内存。  
+
     
-*   如果数据集比较小，直接将数据复制到内存中，从内存中读取可以极大加快数据读取的速度。  
+
+* 如果数据集比较小，直接将数据复制到内存中，从内存中读取可以极大加快数据读取的速度。  
+
     
-*   调整workers数量，过少的线程读取数据会导致速度非常慢，过多线程读取数据可能会由于阻塞也导致速度非常慢。所以需要根据自己机器的情况，尝试不同数量的workers，选择最合适的数量。一般设置为 cpu 核心数或gpu数量  
+
+* 调整 workers 数量，过少的线程读取数据会导致速度非常慢，过多线程读取数据可能会由于阻塞也导致速度非常慢。所以需要根据自己机器的情况，尝试不同数量的 workers，选择最合适的数量。一般设置为 cpu 核心数或 gpu 数量  
+
     
-*   编码的时候要注意尽可能减少CPU和GPU之间的数据传输，使用类似numpy的编码方式，通过并行的方式来处理，可以提高性能。  
+
+* 编码的时候要注意尽可能减少 CPU 和 GPU 之间的数据传输，使用类似 numpy 的编码方式，通过并行的方式来处理，可以提高性能。  
+
     
-*   使用`TFRecord`或者`LMDB`等，减少小文件的读写  
+
+* 使用 `TFRecord` 或者 `LMDB` 等，减少小文件的读写  
+
     
 
 **参考文献**

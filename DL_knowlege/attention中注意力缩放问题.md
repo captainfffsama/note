@@ -1,0 +1,3 @@
+- <https://ai.stackexchange.com/questions/21237/why-does-this-multiplication-of-q-and-k-have-a-variance-of-d-k-in-scaled>
+- <https://kexue.fm/archives/8823>
+- <https://zhuanlan.zhihu.com/p/149903065>
