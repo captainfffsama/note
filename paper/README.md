@@ -34,7 +34,7 @@
 
 # 自监督
 - [A Simple Framework for Contrastive Learning of Visual Representations 未完](paper_note/A%20Simple%20Framework%20for%20Contrastive%20Learning%20of%20Visual%20Representations.md)
-- [DINOv2:Learning Robust Visual Features without Supervision 未完](paper_note/DINOv2_Learning%20Robust%20Visual%20Features%20without%20Supervision.md)
+- [DINOv2:Learning Robust Visual Features without Supervision](paper_note/DINOv2_Learning%20Robust%20Visual%20Features%20without%20Supervision.md)
 
 # 模板匹配
 - [QATM](paper_note/QATM.md)
