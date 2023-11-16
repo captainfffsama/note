@@ -1,9 +1,9 @@
-#pytorch 
-
+ #pytorch 
 
 [官方文档](https://pytorch.org/docs/stable/tensors.html#torch.Tensor.scatter_)
 
-`scatter`的参数有:
+`scatter` 的参数有:
+
 - dim(int): 用于指示沿着哪个轴进行填充
 - index(LongTensor): 轴数和 `src` 相同,里面每一个元素指示了其在`src`上对应位置的值应该放在`target`的第`dim`轴上的第几个位置
 - src(Tensor or float): 要填充到 `target`的值
