@@ -7,7 +7,8 @@ tags: [excalidraw]
 ==⚠  Switch to EXCALIDRAW VIEW in the MORE OPTIONS menu of this document. ⚠==
 
 
-# Text Elements
+# Excalidraw Data
+## Text Elements
 dataset = fo.Dataset.from_dir(
     dataset_dir=dataset_dir,
     dataset_type=fo.types.VOCDetectionDataset,
@@ -34,696 +35,84 @@ has_dataset_info
 get_dataset_info ^po9WG0oC
 
 %%
-# Drawing
-```json
-{
-	"type": "excalidraw",
-	"version": 2,
-	"source": "https://excalidraw.com",
-	"elements": [
-		{
-			"type": "text",
-			"version": 98,
-			"versionNonce": 2098947544,
-			"isDeleted": false,
-			"id": "R56JVYUa",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -333.5272494229404,
-			"y": -271.0994186401367,
-			"strokeColor": "#000000",
-			"backgroundColor": "transparent",
-			"width": 432,
-			"height": 96,
-			"seed": 531490666,
-			"groupIds": [],
-			"roundness": null,
-			"boundElements": [],
-			"updated": 1677548517285,
-			"link": null,
-			"locked": false,
-			"fontSize": 16,
-			"fontFamily": 3,
-			"text": "dataset = fo.Dataset.from_dir(\n    dataset_dir=dataset_dir,\n    dataset_type=fo.types.VOCDetectionDataset,\n    name=name,\n)",
-			"rawText": "dataset = fo.Dataset.from_dir(\n    dataset_dir=dataset_dir,\n    dataset_type=fo.types.VOCDetectionDataset,\n    name=name,\n)",
-			"baseline": 92,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"containerId": null,
-			"originalText": "dataset = fo.Dataset.from_dir(\n    dataset_dir=dataset_dir,\n    dataset_type=fo.types.VOCDetectionDataset,\n    name=name,\n)"
-		},
-		{
-			"type": "ellipse",
-			"version": 30,
-			"versionNonce": 438064042,
-			"isDeleted": false,
-			"id": "HYZGGxMG9sUttAoYjU4Xs",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -146.39996337890625,
-			"y": -285.0812454223633,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 103.199951171875,
-			"height": 48,
-			"seed": 207215286,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [
-				{
-					"id": "iG5hOGBui_yt4WPlwuE08",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677050022060,
-			"link": null,
-			"locked": false
-		},
-		{
-			"type": "text",
-			"version": 409,
-			"versionNonce": 685882602,
-			"isDeleted": false,
-			"id": "r6AqmKx3",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -71.20001220703125,
-			"y": -117.3812484741211,
-			"strokeColor": "#000000",
-			"backgroundColor": "transparent",
-			"width": 371,
-			"height": 61,
-			"seed": 1401880758,
-			"groupIds": [],
-			"roundness": null,
-			"boundElements": [
-				{
-					"id": "iG5hOGBui_yt4WPlwuE08",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677050048544,
-			"link": null,
-			"locked": false,
-			"fontSize": 16,
-			"fontFamily": 3,
-			"text": "类方法的工厂函数，先构建VOCDetectionDataset\n然后调用add_dir,然后返回构造好的数据集实例\n",
-			"rawText": "类方法的工厂函数，先构建VOCDetectionDataset\n然后调用add_dir,然后返回构造好的数据集实例\n",
-			"baseline": 57,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"containerId": null,
-			"originalText": "类方法的工厂函数，先构建VOCDetectionDataset\n然后调用add_dir,然后返回构造好的数据集实例\n"
-		},
-		{
-			"type": "arrow",
-			"version": 855,
-			"versionNonce": 57142698,
-			"isDeleted": false,
-			"id": "iG5hOGBui_yt4WPlwuE08",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -42.496993530208634,
-			"y": -258.4283940029351,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 13.576437950276208,
-			"height": 134.94713942529836,
-			"seed": 230369706,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [],
-			"updated": 1677050035898,
-			"link": null,
-			"locked": false,
-			"startBinding": {
-				"elementId": "HYZGGxMG9sUttAoYjU4Xs",
-				"focus": -1.0076522975831452,
-				"gap": 1
-			},
-			"endBinding": {
-				"elementId": "r6AqmKx3",
-				"focus": -0.739987852677838,
-				"gap": 6.100006103515625
-			},
-			"lastCommittedPoint": null,
-			"startArrowhead": null,
-			"endArrowhead": "arrow",
-			"points": [
-				[
-					0,
-					0
-				],
-				[
-					13.576437950276208,
-					134.94713942529836
-				]
-			]
-		},
-		{
-			"type": "ellipse",
-			"version": 55,
-			"versionNonce": 826408374,
-			"isDeleted": false,
-			"id": "yBFAQbBZou49hhK33tuoK",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -12,
-			"y": -93.08123016357422,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 84.79998779296875,
-			"height": 24.79998779296875,
-			"seed": 271486890,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [
-				{
-					"id": "z2JjPK21GamJZNy3sMyHe",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677050621894,
-			"link": null,
-			"locked": false
-		},
-		{
-			"type": "text",
-			"version": 421,
-			"versionNonce": 1862031658,
-			"isDeleted": false,
-			"id": "DTYC97po",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -271.20001220703125,
-			"y": 31.418739318847656,
-			"strokeColor": "#000000",
-			"backgroundColor": "transparent",
-			"width": 601,
-			"height": 83,
-			"seed": 662441130,
-			"groupIds": [],
-			"roundness": null,
-			"boundElements": [
-				{
-					"id": "z2JjPK21GamJZNy3sMyHe",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677050707398,
-			"link": null,
-			"locked": false,
-			"fontSize": 16,
-			"fontFamily": 3,
-			"text": "又是一个工厂函数，通过 dataset 的 get_dataset_importer_cls 方法得到\n对应的 importer 名称，然后构建 importer 实例。然后调用 import_samples\n方法。\nimport_samples 方法使用构建好的 importer 实例 来导入 sample",
-			"rawText": "又是一个工厂函数，通过 dataset 的 get_dataset_importer_cls 方法得到\n对应的 importer 名称，然后构建 importer 实例。然后调用 import_samples\n方法。\nimport_samples 方法使用构建好的 importer 实例 来导入 sample",
-			"baseline": 79,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"containerId": null,
-			"originalText": "又是一个工厂函数，通过 dataset 的 get_dataset_importer_cls 方法得到\n对应的 importer 名称，然后构建 importer 实例。然后调用 import_samples\n方法。\nimport_samples 方法使用构建好的 importer 实例 来导入 sample"
-		},
-		{
-			"type": "arrow",
-			"version": 59,
-			"versionNonce": 1491844010,
-			"isDeleted": false,
-			"id": "z2JjPK21GamJZNy3sMyHe",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": 45.93291877972888,
-			"y": -64.44401729165338,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 181.93291877972888,
-			"height": 88.96276271401666,
-			"seed": 1483262646,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [],
-			"updated": 1677050654317,
-			"link": null,
-			"locked": false,
-			"startBinding": {
-				"elementId": "yBFAQbBZou49hhK33tuoK",
-				"focus": -0.9865228664969711,
-				"gap": 4.795207434343492
-			},
-			"endBinding": {
-				"elementId": "DTYC97po",
-				"focus": -0.685784056352276,
-				"gap": 6.899993896484375
-			},
-			"lastCommittedPoint": null,
-			"startArrowhead": null,
-			"endArrowhead": "arrow",
-			"points": [
-				[
-					0,
-					0
-				],
-				[
-					-181.93291877972888,
-					88.96276271401666
-				]
-			]
-		},
-		{
-			"type": "ellipse",
-			"version": 63,
-			"versionNonce": 2111603178,
-			"isDeleted": false,
-			"id": "NHt_JmtKemafeYq3hJ1_f",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -12,
-			"y": 47.718788146972656,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 138.4000244140625,
-			"height": 30.39999389648437,
-			"seed": 1207936438,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [
-				{
-					"id": "ttLFIErYWzh1kGZGQvFkO",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677050811688,
-			"link": null,
-			"locked": false
-		},
-		{
-			"type": "text",
-			"version": 397,
-			"versionNonce": 1751035647,
-			"isDeleted": false,
-			"id": "RYKXUTqY",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": 86.40008544921875,
-			"y": -27.78124237060547,
-			"strokeColor": "#000000",
-			"backgroundColor": "transparent",
-			"width": 343,
-			"height": 21,
-			"seed": 2077632246,
-			"groupIds": [],
-			"roundness": null,
-			"boundElements": [
-				{
-					"id": "ttLFIErYWzh1kGZGQvFkO",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677051124929,
-			"link": null,
-			"locked": false,
-			"fontSize": 16,
-			"fontFamily": 3,
-			"text": "importer 实际上是一个可迭代的上下文管理器",
-			"rawText": "importer 实际上是一个可迭代的上下文管理器",
-			"baseline": 17,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"containerId": null,
-			"originalText": "importer 实际上是一个可迭代的上下文管理器"
-		},
-		{
-			"type": "arrow",
-			"version": 232,
-			"versionNonce": 1540257567,
-			"isDeleted": false,
-			"id": "ttLFIErYWzh1kGZGQvFkO",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": 107.08464147816058,
-			"y": 46.81559147468964,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 75.74601396913123,
-			"height": 48.29684605232636,
-			"seed": 705050166,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [],
-			"updated": 1677051124929,
-			"link": null,
-			"locked": false,
-			"startBinding": {
-				"elementId": "NHt_JmtKemafeYq3hJ1_f",
-				"focus": 0.3448612823365828,
-				"gap": 6.261427749522811
-			},
-			"endBinding": {
-				"elementId": "RYKXUTqY",
-				"focus": 0.26754415034386675,
-				"gap": 5.29998779296875
-			},
-			"lastCommittedPoint": null,
-			"startArrowhead": null,
-			"endArrowhead": "arrow",
-			"points": [
-				[
-					0,
-					0
-				],
-				[
-					75.74601396913123,
-					-48.29684605232636
-				]
-			]
-		},
-		{
-			"type": "text",
-			"version": 264,
-			"versionNonce": 1016310570,
-			"isDeleted": false,
-			"id": "pzVNW7DS",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -506.79998779296875,
-			"y": 204.01874542236328,
-			"strokeColor": "#000000",
-			"backgroundColor": "transparent",
-			"width": 447,
-			"height": 83,
-			"seed": 795808298,
-			"groupIds": [],
-			"roundness": null,
-			"boundElements": [
-				{
-					"id": "w1PzpnkNi-V1dDJYiw1tv",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677051067773,
-			"link": null,
-			"locked": false,
-			"fontSize": 16,
-			"fontFamily": 3,
-			"text": "import_samples 方法逻辑大略为：\n1. 进入到 importer 的上下文\n2. 遍历 importer，调用 dataset 的 add_samples 方法\n3. 通过 importer 输出 dataset 的整体信息",
-			"rawText": "import_samples 方法逻辑大略为：\n1. 进入到 importer 的上下文\n2. 遍历 importer，调用 dataset 的 add_samples 方法\n3. 通过 importer 输出 dataset 的整体信息",
-			"baseline": 79,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"containerId": null,
-			"originalText": "import_samples 方法逻辑大略为：\n1. 进入到 importer 的上下文\n2. 遍历 importer，调用 dataset 的 add_samples 方法\n3. 通过 importer 输出 dataset 的整体信息"
-		},
-		{
-			"type": "rectangle",
-			"version": 145,
-			"versionNonce": 345328182,
-			"isDeleted": false,
-			"id": "5cViIjaWPwIGh6L9PH0j5",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -481.8065622472153,
-			"y": 264.39623408437626,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 337.28726628153237,
-			"height": 24.92562003995505,
-			"seed": 1008677494,
-			"groupIds": [],
-			"roundness": {
-				"type": 3
-			},
-			"boundElements": [
-				{
-					"id": "YpI9YS3je3Zn6ec-c_KxD",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677051015492,
-			"link": null,
-			"locked": false
-		},
-		{
-			"type": "arrow",
-			"version": 145,
-			"versionNonce": 1200750070,
-			"isDeleted": false,
-			"id": "YpI9YS3je3Zn6ec-c_KxD",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -448.46892244374965,
-			"y": 294.5179165680005,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 25.155026305609397,
-			"height": 39.66188557578613,
-			"seed": 737445482,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [],
-			"updated": 1677051042483,
-			"link": null,
-			"locked": false,
-			"startBinding": {
-				"elementId": "5cViIjaWPwIGh6L9PH0j5",
-				"focus": 0.7011683872292686,
-				"gap": 5.196062443669206
-			},
-			"endBinding": {
-				"elementId": "po9WG0oC",
-				"focus": 0.3036952927396523,
-				"gap": 5.927213651158013
-			},
-			"lastCommittedPoint": null,
-			"startArrowhead": null,
-			"endArrowhead": "arrow",
-			"points": [
-				[
-					0,
-					0
-				],
-				[
-					-25.155026305609397,
-					39.66188557578613
-				]
-			]
-		},
-		{
-			"type": "text",
-			"version": 57,
-			"versionNonce": 458717302,
-			"isDeleted": false,
-			"id": "po9WG0oC",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -592.1742262598541,
-			"y": 340.10701579494463,
-			"strokeColor": "#000000",
-			"backgroundColor": "transparent",
-			"width": 152,
-			"height": 38,
-			"seed": 1344472810,
-			"groupIds": [],
-			"roundness": null,
-			"boundElements": [
-				{
-					"id": "YpI9YS3je3Zn6ec-c_KxD",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677051050203,
-			"link": null,
-			"locked": false,
-			"fontSize": 16,
-			"fontFamily": 3,
-			"text": "has_dataset_info\nget_dataset_info",
-			"rawText": "has_dataset_info\nget_dataset_info",
-			"baseline": 35,
-			"textAlign": "left",
-			"verticalAlign": "top",
-			"containerId": null,
-			"originalText": "has_dataset_info\nget_dataset_info"
-		},
-		{
-			"type": "ellipse",
-			"version": 30,
-			"versionNonce": 111429738,
-			"isDeleted": false,
-			"id": "S5dh6dfnUoNc-BL73fDpR",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -279.62996913987865,
-			"y": 90.42426276630493,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 154.51628107173042,
-			"height": 33.051602833619825,
-			"seed": 905771446,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [
-				{
-					"id": "w1PzpnkNi-V1dDJYiw1tv",
-					"type": "arrow"
-				}
-			],
-			"updated": 1677051067773,
-			"link": null,
-			"locked": false
-		},
-		{
-			"type": "arrow",
-			"version": 62,
-			"versionNonce": 1525828406,
-			"isDeleted": false,
-			"id": "w1PzpnkNi-V1dDJYiw1tv",
-			"fillStyle": "hachure",
-			"strokeWidth": 1,
-			"strokeStyle": "solid",
-			"roughness": 1,
-			"opacity": 100,
-			"angle": 0,
-			"x": -212.7004860099844,
-			"y": 125.95472950835335,
-			"strokeColor": "#c92a2a",
-			"backgroundColor": "transparent",
-			"width": 115.68060991766947,
-			"height": 66.10320566723965,
-			"seed": 1142738038,
-			"groupIds": [],
-			"roundness": {
-				"type": 2
-			},
-			"boundElements": [],
-			"updated": 1677051067773,
-			"link": null,
-			"locked": false,
-			"startBinding": {
-				"elementId": "S5dh6dfnUoNc-BL73fDpR",
-				"focus": -0.2779549499316681,
-				"gap": 2.626128183127456
-			},
-			"endBinding": {
-				"elementId": "pzVNW7DS",
-				"focus": -0.468172312592767,
-				"gap": 11.96081024677028
-			},
-			"lastCommittedPoint": null,
-			"startArrowhead": null,
-			"endArrowhead": "arrow",
-			"points": [
-				[
-					0,
-					0
-				],
-				[
-					-115.68060991766947,
-					66.10320566723965
-				]
-			]
-		}
-	],
-	"appState": {
-		"theme": "light",
-		"viewBackgroundColor": "#ffffff",
-		"currentItemStrokeColor": "#000000",
-		"currentItemBackgroundColor": "transparent",
-		"currentItemFillStyle": "hachure",
-		"currentItemStrokeWidth": 1,
-		"currentItemStrokeStyle": "solid",
-		"currentItemRoughness": 1,
-		"currentItemOpacity": 100,
-		"currentItemFontFamily": 3,
-		"currentItemFontSize": 16,
-		"currentItemTextAlign": "left",
-		"currentItemStartArrowhead": null,
-		"currentItemEndArrowhead": "arrow",
-		"scrollX": 622.2961613144086,
-		"scrollY": 654.1405239046184,
-		"zoom": {
-			"value": 1.1
-		},
-		"currentItemRoundness": "round",
-		"gridSize": null,
-		"colorPalette": {},
-		"currentStrokeOptions": null,
-		"previousGridSize": null
-	},
-	"files": {}
-}
+## Drawing
+```compressed-json
+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
 ```
 %%
