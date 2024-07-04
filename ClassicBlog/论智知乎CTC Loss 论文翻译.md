@@ -1,4 +1,4 @@
-#CTC损失 #文字识别
+P #CTC损失 #文字识别
 
 [Read on Omnivore](https://omnivore.app/me/80-71-ctc-190480927eb)
 
