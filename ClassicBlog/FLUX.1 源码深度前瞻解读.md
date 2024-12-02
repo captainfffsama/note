@@ -976,3 +976,97 @@ FLUX.1 的总模型结构图如下所示。
 FLUX.1 还是在科研上能给我们一些启示的。RoPE 都是 NLP 那边已经出了很久的工作了，直到现在才搬到图像生成这边来。我们或许能够把 NLP 或者其他视觉任务中使用的神经网络技术搬到图像生成这边来，不费什么力气地改进现有的图像生成模型。
 
 但是，在搬运 NLP 技术中，我们也要思考如何更合理地在视觉应用中使用这些技术。文本和图像存在本质上的区别：文本是离散的，而图像是连续的。这种连续性不仅体现在图像的颜色值上，还体现在图像像素间的位置关系上。就以这里的旋转式位置编码为例，NLP 中，token 间的距离就得是整数。而在 CV 中，如果我们认为图像是一种连续信号，那么非整数的 token 距离或许也是有意义的。从文本和图像的本质区别出发，我们或许能够把 NLP 的技术更好地适配到 CV 上，而不是把 Transformer 搬过来，然后加数据一把梭。
+
+> [!failure]- Failure 
+>   TypeError: (data.choices || data).map is not a function
+>   
+>   
+>   
+>   - new Promise
+>   
+>   
+>   - plugin:obsidian-textgenerator-plugin:1832 Dy
+>     plugin:obsidian-textgenerator-plugin:1832:33
+>   
+>   - plugin:obsidian-textgenerator-plugin:1903 c.request
+>     plugin:obsidian-textgenerator-plugin:1903:70
+>   
+>   - plugin:obsidian-textgenerator-plugin:1905 async eval
+>     plugin:obsidian-textgenerator-plugin:1905:422
+>   
+>  
+
+> [!failure]- Failure 
+>   TypeError: (data.choices || data).map is not a function
+>   
+>   
+>   
+>   - new Promise
+>   
+>   
+>   - plugin:obsidian-textgenerator-plugin:1832 Dy
+>     plugin:obsidian-textgenerator-plugin:1832:33
+>   
+>   - plugin:obsidian-textgenerator-plugin:1903 c.request
+>     plugin:obsidian-textgenerator-plugin:1903:70
+>   
+>   - plugin:obsidian-textgenerator-plugin:1905 async eval
+>     plugin:obsidian-textgenerator-plugin:1905:422
+>   
+>  
+
+> [!failure]- Failure 
+>   TypeError: Cannot read properties of undefined (reading '0')
+>   
+>   
+>   
+>   - new Promise
+>   
+>   
+>   - plugin:obsidian-textgenerator-plugin:1832 Dy
+>     plugin:obsidian-textgenerator-plugin:1832:33
+>   
+>   - plugin:obsidian-textgenerator-plugin:1901 c.request
+>     plugin:obsidian-textgenerator-plugin:1901:70
+>   
+>   - plugin:obsidian-textgenerator-plugin:1905 async eval
+>     plugin:obsidian-textgenerator-plugin:1905:422
+>   
+>  
+
+> [!failure]- Failure 
+>   TypeError: Cannot read properties of undefined (reading '0')
+>   
+>   
+>   
+>   - new Promise
+>   
+>   
+>   - plugin:obsidian-textgenerator-plugin:1832 Dy
+>     plugin:obsidian-textgenerator-plugin:1832:33
+>   
+>   - plugin:obsidian-textgenerator-plugin:1901 c.request
+>     plugin:obsidian-textgenerator-plugin:1901:70
+>   
+>   - plugin:obsidian-textgenerator-plugin:1905 async eval
+>     plugin:obsidian-textgenerator-plugin:1905:422
+>   
+>  
+
+> [!failure]- Failure 
+>   Error: {error:{message:'Invalid Authentication',type:'invalid_authentication_e  rror'}}
+>  
+
+> [!failure]- Failure 
+>   TypeError: n.text is not a function
+>   
+>   - plugin:obsidian-textgenerator-plugin:1900 c.request
+>     plugin:obsidian-textgenerator-plugin:1900:569
+>   
+>   - task_queues:95 process.processTicksAndRejections
+>     node:internal/process/task_queues:95:5
+>   
+>   - plugin:obsidian-textgenerator-plugin:1905 async eval
+>     plugin:obsidian-textgenerator-plugin:1905:422
+>   
+>  
