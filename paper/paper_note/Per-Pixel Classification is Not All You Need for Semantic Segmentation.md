@@ -374,7 +374,7 @@ Acknowledgments and Disclosure of Funding
 ----------------------------------------------------
 
 We thank Ross Girshick for insightful comments and suggestions. Work of UIUC authors Bowen Cheng and Alexander G. Schwing was supported in part by NSF under Grant #1718221, 2008387, 2045586, 2106825, MRI #1725729, NIFA award 2020-67021-32799 and Cisco Systems Inc. (Gift Award CG 1377144 - thanks for access to Arcetri).  
-我们感谢 Ross Girshick 的有见地的评论和建议。UIUC 作者 Bowen Cheng 和 Alexander G. Schwing 的工作得到了 NSF 的部分支持，包括 Grant #1718221、2008387、2045586、2106825、MRI #1725729、NIFA 奖 2020-67021-32799 和 Cisco Systems Inc.（礼品奖 CG 1377144 - 感谢您访问 Arcetri）。
+
 
 Appendix 附录
 
