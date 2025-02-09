@@ -30,7 +30,7 @@ LLM 在 InternVL 中被引入到 CLIP 中，但是这种方法需要大规模重
 
 MNTP 的实施方法是依据 LLM 特性，遮蔽后 M 个 token，然后预测遮蔽前一个 token。除开使用 CC-3M, 还用了 Wikitext-103 数据集来保持 LLM 的能力。
 
-最后标题对比学习，使用 SimSCE 损失，将同一张图片标题拉近，不同图片标题推远。我们使用了两种 prompt："Given a caption, retrieve a detailed relevant caption" 和 "Given a detailed caption, retireve a short relevant caption"。我们将 prompt 添加到待查询标题之前，使之答案是对应的详细或者原始标题。我们还是用了 1.5 M 的通用文本来保持 LLM 在纯语言任务中的性能。
+最后对标题对比学习，使用 SimSCE 损失，将同一张图片标题拉近，不同图片标题推远。我们使用了两种 prompt："Given a caption, retrieve a detailed relevant caption" 和 "Given a detailed caption, retireve a short relevant caption"。我们将 prompt 添加到待查询标题之前，使之答案是对应的详细或者原始标题。我们还用了 1.5 M 的通用文本来保持 LLM 在纯语言任务中的性能。
 
 以上所有训练都是使用 LoRA 训练一个 epoch。我们发现使用标题对比学习对提升 LLM 的描述符可区分性影响最大。
 

@@ -1,9 +1,0 @@
-{
-	"nodes":[
-		{"type":"text","text":"TensorRT视频笔记\n视频地址：\n[B站](https://www.bilibili.com/video/BV15Y4y1W73E/?spm_id_from=333.337.search-card.all.click&vd_source=c6acf7e2d08361599bddd176f227d590)","id":"ea83378ad81ad6c4","x":-235,"y":-108,"width":175,"height":91},
-		{"id":"6fabadad32767abd","x":17,"y":-156,"width":250,"height":576,"type":"text","text":"# TensorRT基本流程\n\n**构建期**：\n- 建立Builder(引擎构建器)\n- 创建Network（计算图内容）\n- 生成 SerializedNetwork（网络的TRT内部表示）\n**运行期**：\n- 建立 Engine 和 Context\n- Buffer 相关准备（Host端+Device端+拷贝操作）\n- 执行推理(Execute)"}
-	],
-	"edges":[
-		{"id":"a8f912b4a7078666","fromNode":"ea83378ad81ad6c4","fromSide":"right","toNode":"6fabadad32767abd","toSide":"left"}
-	]
-}
