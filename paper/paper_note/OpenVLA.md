@@ -10,6 +10,7 @@
 	-  <https://github.com/stanford-iliad/openvla-mini>
 	- <https://github.com/moojink/openvla-oft>
 	- [TraceVLA: Visual Trace Prompting Enhances Spatial-Temporal Awareness for Generalist Robotic Policies](https://tracevla.github.io/)
+	- [allenzren/open-pi-zero：pi0 视觉语言动作（VLA）模型的重新实现（物理智能） --- allenzren/open-pi-zero: Re-implementation of pi0 vision-language-action (VLA) model from Physical Intelligence](https://github.com/allenzren/open-pi-zero)
 
 # 摘要
 
@@ -105,7 +106,7 @@ OpenVLA 在 29 个任务中比 RT-2-X 高 16.5%，参数仅其 1/7. 我们还发
 
 ## 3.5 训练和推理基建  
 
-在 64xA100 的 GPU 上训练了 14 天，花费 21500 个 A100 小时，batchsize2048.推理使用 bfloat16，需要 15GB 显存，在 4090 上运行效率约 6Hz（不做编译等一些加速技巧）。我们还开源了一个远程 VLA 推理服务端。
+在 64xA100 的 GPU 上训练了 14 天，花费 21500 个 A100 小时，batchsize 2048.推理使用 bfloat16，需要 15GB 显存，在 4090 上运行效率约 6Hz（不做编译等一些加速技巧）。我们还开源了一个远程 VLA 推理服务端。
 
 # 4 OpenVLA 代码
 
