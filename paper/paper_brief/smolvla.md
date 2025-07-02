@@ -1,4 +1,5 @@
 # smolvla
+
 #具身智能 #VLA
 
 ```gate
@@ -7,6 +8,14 @@ height: 800
 zoomFactor: 1
 ```
 
+# Md 记录
+### Token 占比信息
+
+输入 2 张图片，在 prefix token 中，img token emb 为 (B, 64,960), lang token emb 为（B，48，960），state emb 为（B，1，960），最终长度是 64\*2+48+1=177
+
+Stuff token 中，
+
+Time emb 先扩展加上拼接到 action_time_emb 的 hidden dim 上，最后返回是 (B, 50,720)
 
 ## 模型架构
 
