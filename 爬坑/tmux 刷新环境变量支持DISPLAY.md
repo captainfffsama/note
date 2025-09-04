@@ -1,7 +1,7 @@
 #tmux 
 
 ```bash
-eval $(tmux showenv -s | grep -E '^(SSH|DISPLAY)')
+eval $(tmux showenv -s | grep -E '^(SSH|DISPLAY)')`
 ```
 
 # 参考
