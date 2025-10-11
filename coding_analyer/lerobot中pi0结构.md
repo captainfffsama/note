@@ -60,7 +60,7 @@ GemmaModel(
 
 这里总计 token 总共 611 个，顺序为：图片 1 (256token)+ 图片 2 (256token)+ 语言（48token）+state (1token)+action nosiy (50token)
 
-这里 action nosiy 为 action nosiy 和 time_emb 在 hidden dim 上拼接
+这里 action nosiy 为 action nosiy 和 time_emb 在 hidden dim 上拼接，然后通过一个 2 层 mlp 缩放回 1024 的 hidden size
 
 Pi0 在实现上 vlm 和 action expert 都有 18 层 decoder，先每个层每个模型自己单独对对应的 embed 进行投影变换，然后在 seq length 上合一起，使用 attension mask 来空间交互，然后在分别拆分开在各自的模型层上走后续的 FFN 和残差结构
 
