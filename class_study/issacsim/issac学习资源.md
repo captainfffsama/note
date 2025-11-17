@@ -1,0 +1,4 @@
+- [Course | NVIDIA](https://learn.nvidia.com/courses/course?course_id=course-v1:DLI+S-OV-27+V1-ZH&unit=block-v1:DLI+S-OV-27+V1-ZH+type@vertical+block@0b160fb20c52444f9bd49e1775662a23)
+- [LightwheelAI/leisaac：LeIsaac 在 IsaacLab 中利用 SO101Leader（LeRobot）提供远程操控功能，包括数据收集、数据转换以及后续的政策训练。 --- LightwheelAI/leisaac: LeIsaac provides teleoperation functionality in IsaacLab using the SO101Leader (LeRobot), including data collection, data conversion, and subsequent policy training.](https://github.com/LightwheelAI/leisaac)
+- [如何在IsaacSim里抓橙子？_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1gYetzPEpv/?spm_id_from=333.337.search-card.all.click&vd_source=e3db4e23ede78dda54e50ffa1057abac)
+- 

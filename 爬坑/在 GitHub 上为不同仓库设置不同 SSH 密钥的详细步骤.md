@@ -60,7 +60,7 @@ Host github.com-personal
 
 **参数说明**：
 *   `Host`：自定义的主机别名（用于 Git 命令）。
-*   `HostName`：实际连接的服务器地址（保持 `github.com`）。
+*   `HostName`：实际连接的服务器地址（保持 `gith[ubuntu24.04新机装机](../DevelopTools/ubuntu24.04新机装机.md)ub.com`）。
 *   `IdentityFile`：指定使用的私钥路径。
 *   `IdentitiesOnly yes`：强制使用指定的密钥，避免冲突。
 
