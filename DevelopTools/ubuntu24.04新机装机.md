@@ -8,14 +8,23 @@ ssh-keygen -t rsa -b 4096 -C "tuanzhangsama@outlook.com"
 # 小东西
 
 ```bash
-sudo apt install gnome-tweaks
+sudo apt install gnome-tweaks curl gnome-browser-connector
 sudo apt install vim
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
+sudo apt update
+sudo apt install -y gpg wget
+wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | sudo tee /etc/apt/sources.list.d/kitware.list
 
+sudo apt update 
+sudo apt install cmake
+sudo snap install htop
 ```
+
+# Vscode
 
 # Tmux
 
@@ -26,6 +35,7 @@ cd tools
 wget https://github.ednovas.xyz/https://github.com/kiyoon/tmux-appimage/releases/download/3.5a/tmux.appimage
 mkdir quick_links
 ln -s $HOME/tools/tmux.appimage $HOME/tools/quick_links/tmux
+sudo chmod a+x $HOME/tools/tmux.appimage
 sudo apt install libfuse2
 git clone git@github.com:captainfffsama/.tmux.git
 cd .tmux
@@ -39,6 +49,7 @@ cp .tmux/.tmux.conf.local .
 # 配置已有配置
 
 ```bash
+sudo apt install python3-dev python3-venv build-essential
 git clone git@github.com:captainfffsama/LinuxConfig.git
 cd LinuxConfig
 git switch 24_03
@@ -48,7 +59,6 @@ bash set_path.sh
 # Proxychains
 
 ```bash
-git clone https://github.com/rofl0r/proxychains-ng.git
 sudo apt install git
 git clone https://github.com/rofl0r/proxychains-ng.git
 cd proxychains-ng/
@@ -63,6 +73,7 @@ sudo vim /etc/proxychains.conf
 
 ```bash
 sudo apt install flatpak
+sudo apt-get install -y libxcb-cursor-dev libxcb-cursor0 libportal1 libei1
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install deskflow
 nohup flatpak run org.deskflow.deskflow &
@@ -79,6 +90,12 @@ sudo snap install localsend
 ```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+# Miniforge
+
+```bash
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 ```
 
 # Docker
@@ -133,8 +150,10 @@ sudo install lazygit -D -t /usr/local/bin/
 # Pipx
 
 ```bash
-python3 -m pip install --user pipx 
-python3 -m pipx ensurepath
+sudo apt update
+sudo apt install pipx
+pipx ensurepath
+sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
 ```
 
 # Nvitop
@@ -260,3 +279,36 @@ deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https:/
     ]
 }
 ```
+
+# Fcitx5-rime
+
+```bash
+sudo apt update
+sudo apt install fcitx5 fcitx5-rime fcitx5-config-qt fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-qt5
+im-config
+
+#选fcitx5
+
+# 如果装了 git
+git clone --depth=1 https://github.com/iDvel/rime-ice.git ~/Downloads/rime-ice
+# 备份原配置
+mkdir -p ~/.local/share/fcitx5/rime_bak
+cp -r ~/.local/share/fcitx5/rime/* ~/.local/share/fcitx5/rime_bak/
+
+# 复制雾凇拼音配置进去
+cp -r ~/Downloads/rime-ice/* ~/.local/share/fcitx5/rime/
+```
+
+# Wezterm
+
+```bash
+curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+
+sudo apt update
+
+sudo apt install wezterm
+```
+
+参考： https://mwop.net/blog/2024-09-17-wezterm-dropdown.html
