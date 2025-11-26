@@ -204,25 +204,33 @@ sudo systemctl enable ssh
 
 ```bash
 # Add Docker's official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl
+sudo apt update
+sudo apt install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 # Add the repository to Apt sources:
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
 
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt update
+
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
+sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+   curl \
+   gnupg2
+   
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
@@ -230,7 +238,7 @@ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dear
     
 sudo apt-get update
 
-export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.17.8-1
+export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.18.0-1
   sudo apt-get install -y \
       nvidia-container-toolkit=${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
       nvidia-container-toolkit-base=${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
@@ -251,9 +259,11 @@ deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https:/
 
 ### /etc/docker/daemon.json 内容
 
+`sudo mv /var/lib/docker /data/docker_root`
+
 ```json
 {
-    "data-root": "/hc_agi_data/docker_root/docker/",
+    "data-root": "/data/docker_root/docker/",
     "runtimes": {
         "nvidia": {
             "args": [],
@@ -311,4 +321,4 @@ sudo apt update
 sudo apt install wezterm
 ```
 
-参考： https://mwop.net/blog/2024-09-17-wezterm-dropdown.html
+参考： <https://mwop.net/blog/2024-09-17-wezterm-dropdown.html>
