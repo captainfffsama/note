@@ -185,6 +185,44 @@ rm -rf ~/.config/nvim/.git
 nvim
 ```
 
+## 透明背景
+
+将以下添加到 `init.lua` 中，具体参见： <https://github.com/LazyVim/LazyVim/discussions/116#discussioncomment-11108106>
+
+```lua
+
+-- Function to apply transparency settings globally
+local function set_transparency()
+  vim.cmd([[
+hi Normal guibg=NONE ctermbg=NONE
+hi NormalNC guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE ctermbg=NONE
+hi StatusLine guibg=NONE ctermbg=NONE
+hi StatusLineNC guibg=NONE ctermbg=NONE
+hi VertSplit guibg=NONE ctermbg=NONE
+hi TabLine guibg=NONE ctermbg=NONE
+hi TabLineFill guibg=NONE ctermbg=NONE
+hi TabLineSel guibg=NONE ctermbg=NONE
+hi Pmenu guibg=NONE ctermbg=NONE
+hi PmenuSel guibg=NONE ctermbg=NONE
+hi NeoTreeNormal guibg=NONE ctermbg=NONE
+hi NeoTreeNormalNC guibg=NONE ctermbg=NONE
+hi NeoTreeWinSeparator guibg=NONE ctermbg=NONE
+hi NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+]])
+end
+
+-- Apply transparency settings initially
+set_transparency()
+
+-- Reapply transparency on buffer enter
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
+  callback = set_transparency,
+})
+```
+
 ## Sshd
 
 ```bash
@@ -311,4 +349,16 @@ sudo apt update
 sudo apt install wezterm
 ```
 
-参考： https://mwop.net/blog/2024-09-17-wezterm-dropdown.html
+参考： <https://mwop.net/blog/2024-09-17-wezterm-dropdown.html>
+
+# Npm
+
+```bash
+export N_PREFIX=/home/hc-em/tools/npm_tools/n/
+proxychains4 curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s install lts
+
+npm install -g n
+
+npm install -g @johannlai/gptcli
+
+```

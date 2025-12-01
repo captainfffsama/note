@@ -1,3 +1,4 @@
+#具身智能   #力控
 # HMC: Learning Heterogeneous Meta-Control for Contact-Rich Loco-Manipulation
 - 论文：[[2511.14756v1] HMC: Learning Heterogeneous Meta-Control for Contact-Rich Loco-Manipulation](https://arxiv.org/abs/2511.14756v1)
 

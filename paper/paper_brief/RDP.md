@@ -1,3 +1,5 @@
+#具身智能  #DiffusionPolicy #力控
+
 # Reactive Diffusion Policy: Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation
 - 论文：[[2503.02881] Reactive Diffusion Policy: Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation](https://arxiv.org/abs/2503.02881)
 - 代码：[xiaoxiaoxh/reactive_diffusion_policy: [RSS 2025] Reactive Diffusion Policy: Slow-Fast Visual-Tactile Policy Learning for Contact-Rich Manipulation](https://github.com/xiaoxiaoxh/reactive_diffusion_policy)
