@@ -60,7 +60,41 @@ $$
 
 另外为了好训练，我们先去掉力估计和输入，先 train 位置，然后在引入随机力指令和外部干扰。
 
+## 模拟器中 PPO 设置
+### 奖励函数设置
+
+![](../../Attachments/UniFP_tab_A1.png)
+
+Actor 模型最终的输出的 action，应该是 12+6 维个关节的信号。
+
+注意，依据附录 C3，estimator 不仅预测外力，还预测 eef 的位置和基座线速度。
+
+**注意：**
+
+这里预测的 eef 的位置是相对于一个是世界坐标系的一个基座坐标系，该基座坐标系的 xy 和机器人基座一致，但是高度和姿态固定。这样可以让模型学习到，比如要够到的位置在机械臂自身动作范围之外，但是基座可以往前倾斜，进而实现协调运动
+
+### 域随机化参数
+
+![](../../Attachments/UniFP_tab_A2.png)
+
+### 输入命令和力的采样分布范围
+1. EEF 末端是球坐标系 $\mathbf{x}_{\text{ee}}^{\text{cmd}} = (r^{\text{cmd}}, \theta^{\text{cmd}}, \phi^{\text{cmd}}), \quad r^{\text{cmd}} \in [0.35, 0.85]\,\text{m},\ \theta^{\text{cmd}} \in [-0.4\pi, 0.4\pi\text{rad}],\ \phi^{\text{cmd}} \in [-0.6\pi, 0.6\pi\text{rad}]$ 
+2. 末端执行器的力指令范围：$\mathbf{F}_{\text{ee}}^{\text{cmd}} \in \mathbb{R}^3 : [-60\,\text{N}, 60\,\text{N}]$
+3. 机器人基座速度指令范围：$\mathbf{v}_{\text{base}}^{\text{cmd}} = (v_x^{\text{cmd}}, v_y^{\text{cmd}}, \omega_z^{\text{cmd}}), \quad \text{where} \quad v_x \in [-0.8, 0.8]\,\text{m/s},\ v_y \in [-0.6, 0.6]\,\text{m/s},\ \omega_z \in [-0.8, 0.8]\,\text{rad/s}$
+4. 基座力控指令范围：$\mathbf{F}_{\text{base}}^{\text{cmd}} \in \mathbb{R}^3 : [-60\,\text{N}, 60\,\text{N}]$
+5. 外部作用力范围：末端执行器外部作用力： $\mathbf{F}_{\text{ee}} \in \mathbb{R}^3 : [-60\,\text{N}, 60\,\text{N}]$ 机器人基座外部力： $\mathbf{F}_{\text{base}} \in \mathbb{R}^3 : [-60\,\text{N}, 60\,\text{N}]$
+
+## 模仿学习
+### 数据记录
+
+通过远程操控机器人来记录其关节状态、基座状态、控制指令、末端执行器所受的力值，以及安装在机器人末端执行器和基座上的摄像头拍摄的 RGB 图像
+
+### 模型出入口
+
+以机器人的状态、估计出的力值以及图像信息作为输入，从而预测出所需的力值及末端执行器的运动位置。
+
 ## 测试时流程
+
 ```mermaid
 graph TD 
 	A[任务开始：采集初始观测] -->|本体感知+RGB+无Cmd| B[Encoder生成latent特征] 
