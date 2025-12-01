@@ -19,7 +19,7 @@ sudo apt install -y gpg wget
 wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
 echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | sudo tee /etc/apt/sources.list.d/kitware.list
 
-sudo apt update 
+sudo apt update
 sudo apt install cmake
 sudo snap install htop
 ```
@@ -123,7 +123,7 @@ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dear
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-    
+
 sudo apt-get update
 ```
 
@@ -172,12 +172,12 @@ sudo rm -rf /opt/nvim-linux-x86_64
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
-# required  
-mv ~/.config/nvim{,.bak}  
-  
-# optional but recommended  
-mv ~/.local/share/nvim{,.bak}  
-mv ~/.local/state/nvim{,.bak}  
+# required
+mv ~/.config/nvim{,.bak}
+
+# optional but recommended
+mv ~/.local/share/nvim{,.bak}
+mv ~/.local/state/nvim{,.bak}
 mv ~/.cache/nvim{,.bak}
 
 git clone https://github.com/LazyVim/starter ~/.config/nvim
@@ -185,10 +185,48 @@ rm -rf ~/.config/nvim/.git
 nvim
 ```
 
+## 透明背景
+
+将以下添加到 `init.lua` 中，具体参见： <https://github.com/LazyVim/LazyVim/discussions/116#discussioncomment-11108106>
+
+```lua
+
+-- Function to apply transparency settings globally
+local function set_transparency()
+  vim.cmd([[
+hi Normal guibg=NONE ctermbg=NONE
+hi NormalNC guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE ctermbg=NONE
+hi StatusLine guibg=NONE ctermbg=NONE
+hi StatusLineNC guibg=NONE ctermbg=NONE
+hi VertSplit guibg=NONE ctermbg=NONE
+hi TabLine guibg=NONE ctermbg=NONE
+hi TabLineFill guibg=NONE ctermbg=NONE
+hi TabLineSel guibg=NONE ctermbg=NONE
+hi Pmenu guibg=NONE ctermbg=NONE
+hi PmenuSel guibg=NONE ctermbg=NONE
+hi NeoTreeNormal guibg=NONE ctermbg=NONE
+hi NeoTreeNormalNC guibg=NONE ctermbg=NONE
+hi NeoTreeWinSeparator guibg=NONE ctermbg=NONE
+hi NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
+hi EndOfBuffer guibg=NONE ctermbg=NONE
+]])
+end
+
+-- Apply transparency settings initially
+set_transparency()
+
+-- Reapply transparency on buffer enter
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
+  callback = set_transparency,
+})
+```
+
 ## Sshd
 
 ```bash
-sudo apt update 
+sudo apt update
 sudo apt install openssh-server
 sudo systemctl start ssh
 sudo systemctl enable ssh
@@ -230,12 +268,12 @@ newgrp docker
 sudo apt-get update && sudo apt-get install -y --no-install-recommends \
    curl \
    gnupg2
-   
+
 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-    
+
 sudo apt-get update
 
 export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.18.0-1
@@ -244,7 +282,7 @@ export NVIDIA_CONTAINER_TOOLKIT_VERSION=1.18.0-1
       nvidia-container-toolkit-base=${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
       libnvidia-container-tools=${NVIDIA_CONTAINER_TOOLKIT_VERSION} \
       libnvidia-container1=${NVIDIA_CONTAINER_TOOLKIT_VERSION}
-      
+
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 ```
@@ -252,7 +290,7 @@ sudo systemctl restart docker
 ## /etc/apt/sources.list.d/nvidia-container-toolkit.list 内容
 
 ```
-deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /                                                 
+deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /
 #deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/experimental/deb/$(ARCH) /
 
 ```
@@ -322,3 +360,15 @@ sudo apt install wezterm
 ```
 
 参考： <https://mwop.net/blog/2024-09-17-wezterm-dropdown.html>
+
+# Npm
+
+```bash
+export N_PREFIX=/home/hc-em/tools/npm_tools/n/
+proxychains4 curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s install lts
+
+npm install -g n
+
+npm install -g @johannlai/gptcli
+
+```
