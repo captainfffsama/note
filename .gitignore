@@ -7,3 +7,9 @@ Omnivore/
 .history/
 .vscode/
 copilot-custom-prompts/
+
+
+
+
+# Ignore Smart Environment folder
+.smart-env

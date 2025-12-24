@@ -18,6 +18,10 @@
 
 ![](../../Attachments/RDP_traininger_fig1.png)
 
+先 train Fast Policy，train 好之后，train 一个 Slow Policy 来重建 Latent Action Chunk 。
+
+推理的时候先 Slow Policy 接收 Observation，输出 Latent Action Chunk，然后使用 Fast Policy 的 decoder 来挨个解码出真正的动作
+
 ## 限制
 1. RDP 和 TactAR 用于二指夹爪
 2. RDP 无法处理高频视觉输入

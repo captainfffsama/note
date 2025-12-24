@@ -372,3 +372,15 @@ npm install -g n
 npm install -g @johannlai/gptcli
 
 ```
+
+# Atuin
+
+```bash
+bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
+
+atuin register -u <USERNAME> -e <EMAIL>
+atuin import auto
+atuin sync
+
+export PATH=$HOME/.atuin/bin/:$PATH
+```
