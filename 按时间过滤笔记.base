@@ -1,0 +1,26 @@
+views:
+  - type: table
+    name: 表格
+    filters:
+      and:
+        - file.fullname.contains(".md")
+        - file.inFolder("paper")
+    groupBy:
+      property: file.folder
+      direction: ASC
+    order:
+      - file.name
+      - file.ctime
+      - file.mtime
+    sort:
+      - property: file.ctime
+        direction: DESC
+  - type: list
+    name: 视图
+    filters:
+      and:
+        - '!file.inFolder("Attachments")'
+    order:
+      - file.name
+      - file.ctime
+      - file.mtime
