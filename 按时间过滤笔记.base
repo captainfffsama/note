@@ -12,7 +12,9 @@ views:
       - file.name
       - file.ctime
       - file.mtime
-    sort: []
+    sort:
+      - property: file.mtime
+        direction: DESC
   - type: list
     name: 视图
     filters:
