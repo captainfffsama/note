@@ -5,6 +5,7 @@ views:
       and:
         - file.fullname.contains(".md")
         - file.inFolder("paper")
+        - file.ctime > "2025-12-01"
     groupBy:
       property: file.folder
       direction: ASC
