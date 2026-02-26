@@ -52,7 +52,7 @@ We design the network to allow local keypoint aggregation to avoid artifacts due
 图 1 显示了我们模型的整体框架,是一个编解码结构的网络,设模型为 K,其参数为 $\theta_K$. 编码结构是是个 4 个 block 堆叠起来的 VGG 风格的网络,用了 3 次下采样,将图片 $H*W$ 降到 $H/8*W/8$, 这样最终的特征图每个点对应了源图片一个 $8*8$ 的 cell,解码部分是 3 个独立的头网络,分别输出描述符,点位置,置信度.这样,对于一个 $H*W$ 大小的图片,最终得到的关键点数量是 $H*W/64$. 除了最后一个卷积层之外,每层都使用了 BN 和 LeakyReLU.图 2 显示了网络的一些细节. IO-Net 是一个一维 CNN, 参数为 $\theta_{IO}$, 参考的是 [ngRANSC](https://arxiv.org/abs/1905.04132),用了 4 个残差块,并把最后一层的激活函数去掉.这些网络详细结构参数参见表 6 和表 7.
 
 >![fig2](../../Attachments/kp2d_fig2.png)
->KeyPointNet 网络用了一个共享编码结构的网络作为基干,三个输出头分别输出点座标 $p$,置信度 $s$ 和描述符 $f$.在描述符头上,使用 [Sub-pixel convolution](../../DL_knowlege/Sub-pixel%20convolution.md) 上采样之后再与之前底层信息相加来做预测.
+>KeyPointNet 网络用了一个共享编码结构的网络作为基干,三个输出头分别输出点座标 $p$,置信度 $s$ 和描述符 $f$.在描述符头上,使用 [Sub-pixel convolution](../../DL_knowlege/过去CNN相关/Sub-pixel%20convolution.md) 上采样之后再与之前底层信息相加来做预测.
 
 ### KeyPointNet: 神经网络点检测和描述符学习
 #### 关键点位置学习:
@@ -87,7 +87,7 @@ $$
 
 #### 描述符学习:
 
-首先本文用了 [Sub-pixel convolution](../../DL_knowlege/Sub-pixel%20convolution.md) 将描述符头的特征图进行了上采样.  
+首先本文用了 [Sub-pixel convolution](../../DL_knowlege/过去CNN相关/Sub-pixel%20convolution.md) 将描述符头的特征图进行了上采样.  
 在训练描述符头时,还借鉴了度量学习的思想.我们这里使用了带有 [困难样本](https://blog.csdn.net/weixin_42696356/article/details/90738531) 挖掘的 [per-pixel triplet loss](https://arxiv.org/abs/1503.03832?context=cs).对于源图中每个关键点 $p_i \in P_s$ 都有一个描述符 $f_i$, 参见 [superpoint](),这个描述符可以通过对最后的密集描述符特征图合理采样来获得.在目标图片中,描述符特征图的 $p^*_i$ 位置的通道值可以被视为了正样本描述符 $f^*_{i,+}$,选择描述符空间中距离正样本最近的负样本描述符为三元组中的负样本描述符 $f^*_{i,-}$, 则描述符损失函数为:
 
 $$

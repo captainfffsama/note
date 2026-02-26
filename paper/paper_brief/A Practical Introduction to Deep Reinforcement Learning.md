@@ -49,7 +49,7 @@ $$
 
 $\hat{\mu}$ 和 $\hat{\sigma}^2$ 分别代表当前输入数据集的均值（mean）和方差（variance）。
 
-但也有些实现在统计观测的输入时使用了 [welford在线算法](../../DL_knowlege/welford在线算法.md) 来更精确的实现观测的归一化
+但也有些实现在统计观测的输入时使用了 [welford在线算法](../../DL_knowlege/RL概念/welford在线算法.md) 来更精确的实现观测的归一化
 
 ## Policy 熵处理方法
 
@@ -65,11 +65,11 @@ $$
 H_{total} = \sum_{i=1}^{dim} (\log \sigma_i + \text{const})
 $$
 
-详细参见 [强化学习中损失中熵奖励](../../DL_knowlege/强化学习中损失中熵奖励.md)
+详细参见 [强化学习中损失中熵奖励](../../DL_knowlege/RL概念/强化学习中损失中熵奖励.md)
 
 ## 自适应学习率
 
-一般会计算新旧 policy 的 KL 散度 (一般使用 policy 输出的 log 近似计算), 小了就增大 lr. 在 rsl_rl 中通常是使用 1.5 乘除. 而 sb3 中通常是 KL 大了就早停. 具体参见 [强化学习中自适应学习率调整方法](../../DL_knowlege/强化学习中自适应学习率调整方法.md)
+一般会计算新旧 policy 的 KL 散度 (一般使用 policy 输出的 log 近似计算), 小了就增大 lr. 在 rsl_rl 中通常是使用 1.5 乘除. 而 sb3 中通常是 KL 大了就早停. 具体参见 [强化学习中自适应学习率调整方法](../../DL_knowlege/RL概念/强化学习中自适应学习率调整方法.md)
 
 ## 梯度裁剪
 
@@ -77,4 +77,4 @@ $$
 \text{if } \| \mathbf{g} \| > \nu \text{ then } \mathbf{g} \leftarrow \nu \frac{\mathbf{g}}{\| \mathbf{g} \|}
 $$
 
-即将所有梯度视为一个向量，计算其 L2 范数，然后等比缩放。具体参见 [强化学习中梯度剪裁方式](../../DL_knowlege/强化学习中梯度剪裁方式.md)
+即将所有梯度视为一个向量，计算其 L2 范数，然后等比缩放。具体参见 [强化学习中梯度剪裁方式](../../DL_knowlege/RL概念/强化学习中梯度剪裁方式.md)

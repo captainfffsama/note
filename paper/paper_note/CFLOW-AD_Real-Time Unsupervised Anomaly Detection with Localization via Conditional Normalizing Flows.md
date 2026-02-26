@@ -102,7 +102,7 @@ $$
 
 这里我们使用流模型来估计特征向量 $z$ 的对数似然. To increase efficacy of distribution modeling,we propose to incorporate spatial prior into $g(\theta)$ model using conditional flow framework.
 
-我们使用了一个 [Position embedding(PE)](../../DL_knowlege/Position%20embedding.md) 模块产生条件向量 $c^k_i$ .这里的 PE 其实脱胎至 All you need is attention 这篇文章,它使用正余弦函数来对位置进行编码.具体论文实现代码如下:
+我们使用了一个 [Position embedding(PE)](../../DL_knowlege/LLM相关/Position%20embedding.md) 模块产生条件向量 $c^k_i$ .这里的 PE 其实脱胎至 All you need is attention 这篇文章,它使用正余弦函数来对位置进行编码.具体论文实现代码如下:
 
 ```python
 def positionalencoding2d(D, H, W):

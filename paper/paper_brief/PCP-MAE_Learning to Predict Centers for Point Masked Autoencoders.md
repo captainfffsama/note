@@ -8,7 +8,7 @@
 
 ![](../../Attachments/PCP-MAE_Fig2_Overview.png)
 
-先对点云进行 [最远点采样（Farthest Point Sampling，FPS）](../../DL_knowlege/Farthest%20Point%20Sampling.md) 和 KNN 将点云划分成 Patch，之后每个 patch 取中心和归一化，然后分为可见和 mask，其中中心点作为位置编码（positional embedding，PE）。然后分别进入编码器。这里 $CD-L_2$ 是 [Chamfer Distance Loss Function](../../DL_knowlege/Chamfer%20Distance%20Loss%20Function.md)
+先对点云进行 [最远点采样（Farthest Point Sampling，FPS）](../../DL_knowlege/Farthest%20Point%20Sampling.md) 和 KNN 将点云划分成 Patch，之后每个 patch 取中心和归一化，然后分为可见和 mask，其中中心点作为位置编码（positional embedding，PE）。然后分别进入编码器。这里 $CD-L_2$ 是 [Chamfer Distance Loss Function](../../DL_knowlege/机器学习基础/Chamfer%20Distance%20Loss%20Function.md)
 
 ## Patch 形成方法
 

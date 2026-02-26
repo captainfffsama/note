@@ -114,7 +114,7 @@ s_{hwh'w'}=
 $$
 
 即取 cell 中心座标为 $p$,图片 A 到 B 的变换为 $H$,然后将 A 中 cell 的中心像素座标经过 $H$ 变换到 B 图片座标系中,AB 间 cell 中心像素座标小于 8 视为可以配对上,大于 8 为对不上.这里 8 正好是一个 cell 的大小.   
-这里的损失函数用了一个 [hinge loss](../../DL_knowlege/hinge%20loss.md)
+这里的损失函数用了一个 [hinge loss](../../DL_knowlege/机器学习基础/hinge%20loss.md)
 
 ## 4.Synthetic 预训练
 ### 4.1.Synthetic Shapes 数据集

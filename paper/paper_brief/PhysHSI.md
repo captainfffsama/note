@@ -44,7 +44,7 @@ $$
 
 #### 任务观测
 
-一般包含物体的边界框 $\mathbf{b}_t \in \mathbb{R}^3$ ，物体位置 $\mathbf{p}_{b_t}^{o_t} \in \mathbb{R}^3$ ，方向 $\mathbf{R}_{b_t}^{o_t} \in \mathbb{R}^6$ ，使用 [6D 法线 - 切线表示法](../../DL_knowlege/6D法切向量表示法.md)，以及物体目标放置位置 $\mathbf{p}_{b_t}^{g_t} \in \mathbb{R}^3$ ,以上均以机器人基座标表示。
+一般包含物体的边界框 $\mathbf{b}_t \in \mathbb{R}^3$ ，物体位置 $\mathbf{p}_{b_t}^{o_t} \in \mathbb{R}^3$ ，方向 $\mathbf{R}_{b_t}^{o_t} \in \mathbb{R}^6$ ，使用 [6D 法线 - 切线表示法](../../DL_knowlege/空间相关/6D法切向量表示法.md)，以及物体目标放置位置 $\mathbf{p}_{b_t}^{g_t} \in \mathbb{R}^3$ ,以上均以机器人基座标表示。
 
 #### 判别器观测
 
