@@ -3,9 +3,13 @@ views:
     name: 表格
     filters:
       and:
-        - file.fullname.contains(".md")
-        - file.inFolder("paper")
-        - file.ctime > "2025-10-01"
+        - and:
+            - file.fullname.contains(".md")
+            - or:
+                - file.inFolder("paper")
+                - file.inFolder("DL_knowlege")
+            - and:
+                - file.ctime > "2026-01-01"
     groupBy:
       property: file.folder
       direction: ASC
