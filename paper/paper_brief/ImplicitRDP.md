@@ -5,6 +5,7 @@
 # ImplicitRDP: An End-to-End Visual-Force Diffusion Policy with Structural Slow-Fast Learning
 - 论文： <https://arxiv.org/abs/2512.10946>
 - 项目： <https://implicit-rdp.github.io>
+- 代码：<https://github.com/Chen-Wendi/ImplicitRDP>
 
 ## 动机
 1. 一些引入力信号的方法在预测时依然是基于 action chunk 的，在每个块仍然是开环的
