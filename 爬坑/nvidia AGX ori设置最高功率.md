@@ -1,0 +1,1 @@
+控制台设置 `sudo nvpmodel -m 0`，然后 reboot

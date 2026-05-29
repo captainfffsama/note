@@ -48,7 +48,7 @@ $$
 
 ![fcdd_afig1](../../Attachments/fcdd_afig1.png)
 
-这里 $c \in R^d$ 输出空间中心, $\phi : R^{c \times h \times w} \to R^d$ 为神经网络,权值为 $W$ . $h$ 为 [pseudo-Huber 损失](../../DL_knowlege/Huder%20loss.md#Pseudo-Huber%20loss%20function), $h(a)=\sqrt{||a||_2^2+1}-1$ ,即使用一个可导的二次惩罚来近似一个线性惩罚. HSC 损失鼓励正常样本聚集到 $c$,异常样本远离 $c$ .在本文实现中,中心 $c$ 对应于网络最后一层的偏置项.所以这个中心是包含在网络 $\phi$ 中的,因此我们在 FCDD 的描述将忽略这点.
+这里 $c \in R^d$ 输出空间中心, $\phi : R^{c \times h \times w} \to R^d$ 为神经网络,权值为 $W$ . $h$ 为 [pseudo-Huber 损失](../../DL_knowlege/机器学习基础/Huder%20loss.md#Pseudo-Huber%20loss%20function), $h(a)=\sqrt{||a||_2^2+1}-1$ ,即使用一个可导的二次惩罚来近似一个线性惩罚. HSC 损失鼓励正常样本聚集到 $c$,异常样本远离 $c$ .在本文实现中,中心 $c$ 对应于网络最后一层的偏置项.所以这个中心是包含在网络 $\phi$ 中的,因此我们在 FCDD 的描述将忽略这点.
 
 **全卷积架构:**  
  全卷积网络将图片映射成一个矩阵,比如 $\phi: R^{c \times h \times w} \to R^{1 \times u \times v}$ ,它一般仅包含卷积层和池化层,不包含全连接层.这种情况下,池化可以被视为是固定权重的卷积.

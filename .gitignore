@@ -1,3 +1,4 @@
+.smart-env/
 .obsidian/workspace
 .obsidian/
 !obsidian.css
@@ -6,3 +7,10 @@ Omnivore/
 .history/
 .vscode/
 copilot-custom-prompts/
+.smtcmp*
+
+
+
+
+# Ignore Smart Environment folder
+.smart-env

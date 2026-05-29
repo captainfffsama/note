@@ -45,27 +45,27 @@ $$
 
 假设现有两个分布 $\pi{(z)}$ 和 $p(x)$ ，已知 $x=f(z)$ ,求 $\pi{(z)}$ 和 $p(x)$ 的关系。
 
-![](../Attachments/change_of_variable_theorem_2.png)
+![](../../Attachments/change_of_variable_theorem_2.png)
 
 这里由于是微分， $\Delta$ 很小，因此在这个小范围内，我们可以认为 $z'$ 到 $z'+\Delta z$ 是一个平均分布。那么如果知道 $x=f(z)$ ，那么就可以求出 $\frac{dz}{dx}$ 。
 
 多维的情况下如下图：
 
-![](../Attachments/change_of_variable_theorem_3.png)
+![](../../Attachments/change_of_variable_theorem_3.png)
 
 即 $z$ 空间下变化的超体积等于变化后对应于 $x$ 空间的图像超体积。
 
 整理以上式子得到：
 
-![](../Attachments/change_of_variable_theorem_4.png)
+![](../../Attachments/change_of_variable_theorem_4.png)
 
 ## Flow-based Model 的一些基本限定
 
-![](../Attachments/Pasted%20image%2020241126104536.png)
+![](../../Attachments/Pasted%20image%2020241126104536.png)
 
 由于要求 generator 的逆 $G^{-1}$ ，因此 x 和 z 的维度必须得一样。另外 generator 的架构有限制，肯定能力有限，因此会叠加多个。
 
-![](../Attachments/Pasted%20image%2020241126105136.png)
+![](../../Attachments/Pasted%20image%2020241126105136.png)
 
  具体在训练时，由于上式子中仅有 $G^{-1}$ 。因此我们通常是训练 $G^{-1}$ ,然后推理时用 $G$ ，即从真实分布中采样一个样本 $x^i$ ，然后得到 $z^i=G^{-1}(x^i)$ ,然后使 $\pi (z^i)$ 最大。
 
@@ -75,7 +75,7 @@ $$
 **Coupling Layer**
 ### 前向推理模式 ：
 
-![](../Attachments/Pasted%20image%2020241126111032.png)
+![](../../Attachments/Pasted%20image%2020241126111032.png)
 
 即，将正太分布抽样出来的 $z$ 按照 $d$ 维来分成两段，第一段 $z_{i \leq d}$ 直接复制得到 $x_{i \leq d}$  ,然后将 $z_{i \leq d}$ 分别经过两个网络 F 和 H，得到 $\beta_{D}$ 和 $\gamma_{D}$ ,然后 $x_{i > d}=\beta_{i} z_i+\gamma_{i}$ 。
 
@@ -87,7 +87,7 @@ $$
 
 ### 求雅可比矩阵的行列式
 
-![](../Attachments/Pasted%20image%2020241126131911.png)
+![](../../Attachments/Pasted%20image%2020241126131911.png)
 
 $z_{i \leq d}=x_{i \leq d}$ ，所以左上角的块中矩阵是一个单位矩阵， $z_{i \leq d}$ 和 $x_{i > d}$ 没有关系，所以右上角块中是 0 矩阵。由于这两块分别是单位矩阵和 0 矩阵，因此整个矩阵的行列式等于右下角块中矩阵的行列式。而这里由于 $x_{i>d}=\beta_i z_i+\gamma_i$ ,所以 $z_i$ 仅和 $x_i$ 有关系，因此整个右下角块中矩阵为一个对角矩阵，其行列式等于 $\prod_{i=d}^D \beta_i$ 。
 
@@ -111,13 +111,13 @@ $z_{i \leq d}=x_{i \leq d}$ ，所以左上角的块中矩阵是一个单位矩�
 
 更进一步，假设输出图像中每个像素仅与前一个输入中对应位置像素有关，那只需让模型来学习如何将各通道进行混合就好, 由于图像是 3 通道，那么引入一个 $3 \times 3$ 大小的矩阵来指导模型如何混合通道信息即可。
 
-![](../Attachments/Pasted%20image%2020241126135932.png)
+![](../../Attachments/Pasted%20image%2020241126135932.png)
 
 由于只要矩阵行列式不为 0，那么矩阵即可逆，所以以一个可逆矩阵来初始化，学习出来的矩阵行列式为 0 的概率还是很小的，因此 W 可逆这件事很容易达成。
 
 其雅可比矩阵就是 W 的权重。那么其整个的雅可比矩阵的行列式就为：
 
-![](../Attachments/Pasted%20image%2020241126140252.png)
+![](../../Attachments/Pasted%20image%2020241126140252.png)
 
 ## 应用
 

@@ -5,3 +5,5 @@
 并且相比 cross-attention 和 in-context 方法，adaLN 效果最好
 
 ![](../Attachments/DiT.png)
+
+![](../Attachments/DiT_fig2.png)

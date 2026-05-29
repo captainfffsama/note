@@ -179,7 +179,7 @@ $$
  
 ### 4.3.描述器损失,$L^{desc}$
 
-损失函数使用 [hinge loss](../../DL_knowlege/hinge%20loss.md)   
+损失函数使用 [hinge loss](../../DL_knowlege/机器学习基础/hinge%20loss.md)   
 定义一个 $M^A*M^B$ 大小的矩阵 C,其中元素值为 0 或 1.若分支 A 经 T 变换之后,某点和分支 B 中有点的距离小于 8,则矩阵 C 对应的元素 $c_{ij}=1$,不同于之前的点配对,这里可能会出现一对多的情况.   
 
 $$
@@ -192,7 +192,7 @@ c_{ij}=
 \tag{14}
 $$ 
 
-[hinge loss](../../DL_knowlege/hinge%20loss.md) 将利用正边界 $m_p$ 和负边界 $m_n$ 来计算
+[hinge loss](../../DL_knowlege/机器学习基础/hinge%20loss.md) 将利用正边界 $m_p$ 和负边界 $m_n$ 来计算
 
 $$
 L^{desc}=\sum^{M^A}_{i=1} \sum^{M^B}_{j=1} l^{desc}_{ij}

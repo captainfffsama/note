@@ -1,0 +1,31 @@
+views:
+  - type: table
+    name: 表格
+    filters:
+      and:
+        - and:
+            - file.fullname.contains(".md")
+            - or:
+                - file.inFolder("paper")
+                - file.inFolder("DL_knowlege")
+            - and:
+                - file.ctime > "2026-01-01"
+    groupBy:
+      property: file.folder
+      direction: ASC
+    order:
+      - file.name
+      - file.ctime
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+  - type: list
+    name: 视图
+    filters:
+      and:
+        - '!file.inFolder("Attachments")'
+    order:
+      - file.name
+      - file.ctime
+      - file.mtime

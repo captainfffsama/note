@@ -1,8 +1,17 @@
 #tmux 
 
 ```bash
-eval $(tmux showenv -s | grep -E '^(SSH|DISPLAY)')`
+eval $(tmux showenv -s | grep -E '^(SSH|DISPLAY)')
 ```
+
+在 tmux 配置文件中添加：
+
+```
+# 让 tmux 运行 update-environment 命令来抓取这些变量
+set -g update-environment "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+```
+
+然后刷新 tmux 配置使之生效，然后执行上一句
 
 # 参考
 
