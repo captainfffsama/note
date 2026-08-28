@@ -83,6 +83,8 @@ $$\text{Loss}_{\pi} = \mathbb{E}_{s \sim D, a \sim \pi} [\alpha \log \pi(a|s) - 
 
 以极小的比例（如 $\tau=0.005$）更新目标网络，保证训练过程平滑，不乱跳。
 
+# 其他步骤说明
+![](../../Attachments/SAC步骤说明.png)
 # 5. 总结
 
 | **特性**   | **说明**                       |
@@ -92,6 +94,8 @@ $$\text{Loss}_{\pi} = \mathbb{E}_{s \sim D, a \sim \pi} [\alpha \log \pi(a|s) - 
 | **动作空间** | 完美支持连续空间 (Continuous Action) |
 | **核心卖点** | 自动探索，不容易陷入局部最优               |
 
+# 靠谱参考
+- [SAC 算法 - 动手学强化学习](https://hrl.boyuai.com/chapter/2/sac%E7%AE%97%E6%B3%95)
 # 伪代码实现
 ## SAC 算法简易伪代码
 

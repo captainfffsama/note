@@ -7,7 +7,6 @@ views:
             - file.fullname.contains(".md")
             - or:
                 - file.inFolder("paper")
-                - file.inFolder("DL_knowlege")
             - and:
                 - file.ctime > "2026-01-01"
     groupBy:
@@ -18,6 +17,8 @@ views:
       - file.ctime
       - file.mtime
     sort:
+      - property: file.ctime
+        direction: DESC
       - property: file.mtime
         direction: DESC
   - type: list

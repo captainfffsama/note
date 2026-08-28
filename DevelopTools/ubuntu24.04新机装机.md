@@ -38,6 +38,7 @@ ln -s $HOME/tools/tmux.appimage $HOME/tools/quick_links/tmux
 sudo chmod a+x $HOME/tools/tmux.appimage
 sudo apt install libfuse2
 git clone git@github.com:captainfffsama/.tmux.git
+
 cd .tmux
 git switch own
 cd

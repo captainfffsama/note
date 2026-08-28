@@ -26,7 +26,9 @@ LLARVA 强调了将体素或点云表示纳入现有视觉语言结构的困难�
 
 ### 点云嵌入网络 PEN
 
-先将 RealSense 的原始点云转换成以 TCP 位置为原点的点云。
+先将 RealSense 的原始点云转换成以 TCP 位置为原点的点云。 在代码中的实现为：
+
+通过内外参将点云从相机坐标系转基座坐标系，然后若开启了 `shift_ee`，则点云都减去末端的位置，即保持坐标轴和基座一致。
 
 这里编码器用双路架构：
 
@@ -35,7 +37,7 @@ LLARVA 强调了将体素或点云表示纳入现有视觉语言结构的困难�
 
 ![](../../Attachments/GeoVLA_fig3.png)
 
-图中蓝色方块 $\mathcal{F}_{\mathrm{anchor}}$ 为点云中 TCP 所在在位置对应的 token
+图中蓝色方块 $\mathcal{F}_{\mathrm{anchor}}$ 为点云中 TCP 所在在位置对应的 token,仅仅选择这一个位置的 token 作为 PEN 模块给出的提示
 
 ### 3D 增强动作专家
 

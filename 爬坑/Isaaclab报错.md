@@ -84,12 +84,14 @@ df -i
 如果 `/home` 对应的 IUse% 是 100%，你需要删除大量小文件（比如旧的 python 环境或编译碎片）。
 
 ### 总结
+
 **99% 的情况下，执行“临时修复”中的 `sudo sysctl` 命令即可解决此问题。**
 
-
-# 源码安装 Isaaclab 报错ERROR: Failed building wheel for egl_probe
+# 源码安装 Isaaclab 报错 ERROR: Failed building wheel for egl_probe
 ## 现象
+
 执行源码安装 isaaclab 时报错如下：
+
 ```text
 Building wheels for collected packages: isaaclab_mimic, robomimic, egl_probe
   Building editable for isaaclab_mimic (pyproject.toml) ... done
@@ -246,4 +248,20 @@ error: failed-wheel-build-for-install
 × Failed to build installable wheels for some pyproject.toml based projects
 ╰─> egl_probe
 
+```
+
+# 源码安装之后报错没有 isaaclab 包
+## 原因
+
+需要执行 `./isaaclab.sh --install none` ，这个过程中需要安装 `flatdict==4.0.1`,安装时大概率报错：**ModuleNotFoundError: No module named 'pkg_resources'**，因为 setuptools 版本过高。处理方法是先安 setuptools 低版本安装好 flatdict ，然后再装 isaaclab
+
+##  解决方法
+
+```bash
+# 降级setuptools
+pip install "setuptools<70.0.0"
+# 不隔离编译环境，复用系统设置
+pip install flatdict==4.0.1 --no-build-isolation
+pip install setuptools==82.0.1
+./isaaclab.sh --install none
 ```

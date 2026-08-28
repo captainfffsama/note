@@ -1,0 +1,11 @@
+- Diffusion Suction Grasping with Large-Scale Parcel Dataset
+- SuctionNet-1 Billion: A Large-Scale Benchmark for Suction Grasping
+- OptiGrasp: Optimized Grasp Pose Detection Using RGB Images for Warehouse Picking Robots
+- MultiGraspNet: A Multitask 3D Vision Model for Multi-gripper Robotic Grasping
+- Robotic Pick-and-Place of Novel Objects in Clutter with Multi-Affordance Grasping and Cross-Domain Image Matching
+-  Cartman: The low-cost Cartesian Manipulator that won the Amazon Robotics Challenge
+- Learning Ambidextrous Robot Grasping Policies（Dex-Net 4.0）
+- Seg 2 Grasp: A Robust Modular Suction Grasping in Bin Picking
+- Suction Grasp Region Prediction using Self-supervised Learning for Object Picking in Dense Clutter
+- DYNAMO-GRASP: DYNAMics-aware Optimization for GRASP point detection in suction grippers
+- [maximiliangilles/MetaGraspNet: MetaGraspNet: Official Code Repository](https://github.com/maximiliangilles/MetaGraspNet)
