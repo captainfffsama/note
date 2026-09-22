@@ -513,16 +513,7 @@ OpenWAM-$\alpha$ is pretrained on multi-domain data drawn from five sources span
 
 **Table 4.** **The OpenWAM-$\alpha$ pretraining data.** *\#Emb.* counts each source’s distinct embodiments. *Task Coverage* marks the manipulation settings each source spans. *Full* reports each source’s raw size before processing, while *Curated + Sampled* reports the data actually used for training, after cleaning (Section 5.2.2) and per-source whole-episode subsampling (Section 5.2.1); *Share* is each source’s actual per-epoch sample share under proportional sampling.
 
-|  |  |  |  |  |  |  |  |  |  |  |  |  |
-|:---|:---|:--:|:--:|:--:|:--:|:--:|:--:|---:|---:|---:|---:|---:|
-|  |  |  |  | Task Coverage | Full | Curated + Sampled |  |  |  |  |  |  |
-| Source |  Type |  \#Emb. |  FPS | Single | Bimanual | Mobile | Dexterous | Frames (M) | Hours | Frames (M) | Hours | Share (%) |
-| Egocentric data (ours) | Human video | 1 | 30 | *in-the-wild human manipulation* | 744.9 | 6,897 | 155.7 | 1,442 | 30.1 |  |  |  |
-| AgiBotWorld-Beta \[73\] | Real robot | 1 | 15 |  | $\checkmark$ | $\checkmark$ | $\checkmark$ | 124.5 | 2,306 | 96.9 | 1,794 | 18.6 |
-| RoboCOIN \[72\] | Real robot | 15 | 30 |  | $\checkmark$ | $\checkmark$ | $\checkmark$ | 104.5 | 956 | 74.1 | 686 | 14.3 |
-| DROID \[74\] | Real robot | 1 | 10 | $\checkmark$ |  |  |  | 46.3 | 1,285 | 36.3 | 1,007 | 7.0 |
-| InternData-A1 \[75\] | Simulation | 4 | 30 | $\checkmark$ | $\checkmark$ |  |  | 313.7 | 2,904 | 155.5 | 1,440 | 30.0 |
-| **Total** |  | 21 robot + human |  |  | **1,333.9** | **14,348** | **518.5** | **6,369** | **100.0** |  |  |  |
+![](../../../Attachments/openwam_tab4.png) 
 
 ### Pretraining Data Mixture
 
