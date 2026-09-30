@@ -6,6 +6,48 @@
 
 ![](../../Attachments/holobrain_network_architecture.svg)
 
+## 原理
+###  异步平滑
+#### 推理侧：simpleRTC
+
+融合动作 [i] = w[i] × 旧动作 [i] + (1 - w[i]) × 新动作 [i]
+
+0 <= i < D：w[i] = 1 完全沿用旧动作
+
+D <= i < H：w[i] 从接近 1 衰减到接近 0
+
+i >= H：保持原始新预测
+
+其中 w = c × (exp(c) - 1) / (e - 1)。
+
+举例：若旧动作剩 20 步、`delay_horizon=6`、  
+`max_horizon=32`，则第 0–5 步完全沿旧动作，第 6–19 步渐变，第 20 步起完全  
+使用新预测。
+
+#### 训练侧：teacher-forcing
+1. 使用均匀随机采样出加噪时间步 t(0~999 归一化到 1)（并行时，每个并行一样）
+2. 以 2% 概率触发 pred_steps // 4 的泊松分布得到替换的 action chunk 步数 d（每个样本独立）
+3. 依据 $A_t=\sqrt{\bar\alpha_t}A+\sqrt{1-\bar\alpha_t}\epsilon$ ，求得带噪输入动作（这里只对关节角算这个，其余状态依据关节角重算）。将 $A_t$ 前 d 个动作换成 $A$ 中真实动作。
+4. 网络接收 $( A_t,t,图像emb，文本emb)$ ,输出预测干净的动作，然后和真实动作求 Smooth L 1，所有位置都算。
+
+这里网络结构为：
+
+1. 编码带噪动作。输入形状为 [B, pred_steps, num_joint, state_dims]。代码先按关节整理，再把每 chunk_size=4 个连续动作拼成一个 token，经线性层映射到 embed_dims=256。所以 pred_steps=64 时，每个关节有 16 个时间 token。
+2. 注入扩散时间步。 整数 t 先经过正弦/余弦频率编码和 MLP，形成时间特征。每层的 AdaRMSNorm 用它调节 token 特征，并产生注意力及前馈层的门控参数。因此同一个带噪动作在不同 t 下，可以得到不同的干净动作预测。
+3. 融合其他条件。 当前配置重复 6 次以下模块：时间与关节联合注意力、对图像特征的交叉注意力、对文本特征的交叉注意力，以及前馈层。历史机器人状态先由 robot_encoder 编码，供时间与关节注意力使用；时间注意力有因果掩码，当前位置不能读取未来的动作 token。
+4. 还原完整动作。 UpsampleHead 把 16 个时间 token 上采样回 64 个动作，并输出每个关节的 8 维状态：关节角、三维位置和四元数。当前配置的网络头采用相对状态表示，随后 get_prediction 结合历史状态将其转换为用于比较的状态预测。最终预测与完整的真实动作 chunk 计算 loss。
+
+和 [标准的训练时 RTC](Training-Time%20Action%20Conditioning%20for%20Efficient%20Real-Time%20Chunking.md) 的不同：
+
+| 环节      | HoloBrain                                               | 论文的 training-time RTC               |
+| ------- | ------------------------------------------------------- | ----------------------------------- |
+| 干净前缀    | 先生成加噪轨迹，再把随机前缀替换成真实状态                                   | 前缀使用真实动作                            |
+| 何时使用    | 每条扩展后的训练样本以 `0.02` 概率启用；长度服从均值为 `pred_steps // 4` 的泊松分布 | 训练时采样模拟的推理延迟 \(d\)，用它确定前缀长度         |
+| 生成模型    | DDPM 加噪，预测干净动作                                          | Flow matching，预测速度                  |
+| 时间条件    | **整条轨迹共用一个扩散时间步**；替换前缀后没有给它单独设置时间步                      | 前缀的时间设为 1，后缀保持采样时间；模型能区分“已确定”和“待生成” |
+| 训练 loss | **仍计算前缀的动作误差**                                          | **只计算后缀的误差**                        |
+| 推理      | 默认从噪声生成整段轨迹，没有与训练替换对应的前缀锁定过程                            | 每次生成迭代都写回旧 chunk 提供的前缀              |
+
 # 论文实践
 ## 构建 roboRwin 数据
 
@@ -209,8 +251,4 @@ python scripts/inference_server.py --model_dir "/data/tmp/holobrain_test/260823_
 
 # 客户端
 python scripts/eval_hc_tj_async.py --server-url http://127.0.0.1:2000/holobrain/hc_tj_async/v1 --dataset-path /data/workspaces/RoboOrchardLab/projects/holobrain/data/arrow_dataset/hc_tj_260818_fix --sample-index 0 --sample-index 300 --sample-index 600 --timeout-seconds 300
-```
-
-```bash
-
 ```
