@@ -18,6 +18,9 @@ sudo apt-get install -y \
 
   如果系统自带 cmake 太新，不用急着降；后面 Python 环境里会单独装 cmake<4。
 
+
+
+
   进入 RLinf 仓库并装基础工具：
 
 ```bash
@@ -92,8 +95,8 @@ pip install nvtx
   验证：
 
 ```bash
-python -c "import torch; print('torch:', torch.**version**, 'cuda:', torch.version.cuda)"
-python -c "import numpy; print('numpy:', numpy.**version**)"
+python -c "import torch; print('torch:', torch.version, 'cuda:', torch.version.cuda)"
+python -c "import numpy; print('numpy:', numpy.version)"
 python -c "import openpi; print('openpi: OK')"
 python -c "from flash_attn import flash_attn_func; print('flash_attn: OK')"
 python -c "import isaaclab; print('isaaclab: OK')"

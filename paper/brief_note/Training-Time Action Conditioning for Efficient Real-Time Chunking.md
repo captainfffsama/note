@@ -322,7 +322,9 @@ x_t = x_t + dt * v_t
 
 假设：$H=8$
 
-延迟：$d=3$
+延迟： $d=3$
+
+实际训练中，这个延迟 d 是从 `delays = torch.randint(0, max_delay + 1, (batch_size,), device=device)` 中采样得到
 
 我们已经知道前三步动作：$[a_t,a_{t+1},a_{t+2}]$
 
