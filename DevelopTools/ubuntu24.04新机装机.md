@@ -1,4 +1,3 @@
-
 # 生成 ssh 密钥
 
 ```bash
@@ -365,7 +364,7 @@ sudo apt install wezterm
 # Npm
 
 ```bash
-export N_PREFIX=/home/hc-em/tools/npm_tools/n/
+export N_PREFIX=HOME/tools/npm_tools/n/
 proxychains4 curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s install lts
 
 npm install -g n

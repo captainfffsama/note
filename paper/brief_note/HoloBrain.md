@@ -148,7 +148,7 @@ pip install --no-build-isolation .
 
 # flash-attn
 git clone git@github.com:Dao-AILab/flash-attention.git
-git checkout V2.8.3
+git checkout v2.8.3
 MAX_JOBS=4 pip install . --no-build-isolation
 
 # transformers
@@ -216,10 +216,16 @@ accelerate launch --num_machines 1 --num_processes 2 --multi_gpu scripts/train.p
 ### 导出
 
 ```bash
-python scripts/export.py --config /data/tmp/holobrain_test/260823_w/configs/config_holobrain_qwen_hc_tj.py --workspace "$EXPORT_DIR" --kwargs '{  
+python projects/holobrain/scripts/export.py \  
+--config /data/tmp/holobrain_test/holobrain/261020/configs/config_holobrain_qwen_hc_tj.py \  
+--workspace /data/tmp/holobrain_test/holobrain/261020_export \  
+--kwargs '{  
 "vlm_pretrain": "/data/weights/Qwen/Qwen2.5-VL-3B-Instruct",  
-"checkpoint": "/data/tmp/holobrain_test/260823_w/checkpoint_5/model.safetensors",  
-"urdf": "/data/tmp/holobrain_test/260823_w/urdf/hc_tj_robot.urdf"  
+"checkpoint": "/data/tmp/holobrain_test/holobrain/261020/checkpoints/checkpoint_5/model.safetensors",  
+"async_inference_plugin": {  
+"type": "robo_orchard_lab.models.rtc_plugin.rtc_plugin:RTCInferencePlugin",  
+"max_horizon": 32  
+}  
 }'
 ```
 

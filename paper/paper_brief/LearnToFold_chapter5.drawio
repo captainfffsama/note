@@ -1,0 +1,490 @@
+<mxfile host="app.diagrams.net" pages="6">
+  <diagram id="p1" name="01 总览">
+    <mxGraphModel dx="2014" dy="1028" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1250" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=28;spacing=12;" value="第 5 章：一个策略骨干，三个查询位置，十二个辅助预测头" vertex="1">
+          <mxGeometry height="55" width="1540" x="30" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="范围：论文完整仿真模型 / _BASE_MODEL_CONFIG；B=批大小，H=30，A=12，F=50（FAST 槽位，含 padding）；蓝=输入/骨干，橙=预测头，绿=动作，紫=训练专用，红=限制/目标。" vertex="1">
+          <mxGeometry height="75" width="1540" x="30" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="image" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="三路 RGB → SigLIP So400m/14&lt;br&gt;每路 [B,224,224,3] → [B,256,2048]&lt;br&gt;拼接图像 I：[B,768,2048]" vertex="1">
+          <mxGeometry height="115" width="440" x="40" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="other" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="前缀条件&lt;br&gt;当前查询 [B,1,2048]；状态 [B,12,2048]&lt;br&gt;衣物 + 优势：各 [B,1,2048]" vertex="1">
+          <mxGeometry height="115" width="440" x="580" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="fast" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=18;spacing=12;" value="训练专用输入&lt;br&gt;FAST [B,F,2048]&lt;br&gt;FAST 查询 [B,1,2048]" vertex="1">
+          <mxGeometry height="115" width="440" x="1120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="prefix" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="拼接 → Gemma-2B，18 层&lt;br&gt;训练 [B,834,2048] → 同形输出&lt;br&gt;推理 [B,783,2048] → 同形输出" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="image" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="prefix" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="350" />
+              <mxPoint x="800" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="other" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="prefix" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="fast" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="prefix" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="350" />
+              <mxPoint x="800" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="current" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=18;spacing=12;" value="取当前位置 768 → [B,2048]&lt;br&gt;6 个独立 Linear 当前头&lt;br&gt;4 个标量 + 4 类 logits + 21 个距离" vertex="1">
+          <mxGeometry height="115" width="440" x="40" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="cache" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="每层 K/V：[18,B,834,1,256]&lt;br&gt;删除 FAST + 查询（51 个位置）&lt;br&gt;→ [18,B,783,1,256]；KVTransform 同形" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="futurefast" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=18;spacing=12;" value="取末位 FAST 查询 → [B,2048]&lt;br&gt;3 个 FAST 未来头，仅训练&lt;br&gt;成功 [B]；完成度 [B]；距离 [B,21]" vertex="1">
+          <mxGeometry height="115" width="440" x="1120" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="prefix" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="current" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="prefix" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="cache" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="prefix" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="futurefast" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="actionin" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;" value="归一化含噪动作 xτ [B,30,12]&lt;br&gt;Linear 12→1024 + FM 查询 [B,1,1024]&lt;br&gt;后缀 [B,31,1024]；AdaRMS c [B,1024]" vertex="1">
+          <mxGeometry height="130" width="440" x="40" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="expert" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;" value="Gemma-300M 动作专家，18 层&lt;br&gt;后缀 + 清理后的前缀 K/V + AdaRMS&lt;br&gt;输出 [B,31,1024]" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="flowheads" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=18;spacing=12;" value="取后缀末位 → [B,1024]&lt;br&gt;3 个 FM 未来头，训练 + 推理&lt;br&gt;Δsuccess [B]；完成度 [B]；距离 [B,21]" vertex="1">
+          <mxGeometry height="130" width="440" x="1120" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="cache" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="expert" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="actionin" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="expert" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="expert" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="flowheads" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="velocity" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;" value="取前 30 位：[B,30,1024]&lt;br&gt;Linear 1024→12 → 速度 vτ [B,30,12]&lt;br&gt;反向积分 → 动作块 x₀ [B,30,12]" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" source="expert" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="velocity" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="注意：预测头不输出图像。&lt;br&gt;当前头描述“现在”；未来头评估&lt;br&gt;“采取这一动作块会怎样”。&lt;br&gt;FAST token 分类头另计，不属这 12 个头。" vertex="1">
+          <mxGeometry height="130" width="440" x="1120" y="1000" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p2" name="02 当前预测头">
+    <mxGraphModel dx="2423" dy="1236" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1250" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=28;spacing=12;" value="§5.1 当前帧：共享一个视觉查询，接六个线性头" vertex="1">
+          <mxGeometry height="55" width="1540" x="30" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="success_query_token 是可学习参数 [1,2048]，广播成 [B,1,2048]。所有当前头共用 h_now；没有六套视觉网络。" vertex="1">
+          <mxGeometry height="75" width="1540" x="30" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="vision" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="图像组 G0&lt;br&gt;三相机图像 [B,768,2048]&lt;br&gt;+ 当前查询 [B,1,2048]" vertex="1">
+          <mxGeometry height="115" width="440" x="40" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="vlm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="分组注意力 → Gemma-2B&lt;br&gt;prefix_out [B,834,2048]（训练）&lt;br&gt;G0 只能看 G0；图像与查询双向" vertex="1">
+          <mxGeometry height="115" width="440" x="580" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="h" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=18;spacing=12;" value="success_hidden&lt;br&gt;prefix_out[:,768,:]&lt;br&gt;[B,2048]" vertex="1">
+          <mxGeometry height="115" width="440" x="1120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="vision" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="vlm" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="vlm" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="h" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="success" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="success_head&lt;br&gt;Linear 2048→1 → squeeze → sigmoid&lt;br&gt;[B,2048] → [B,1] → [B]&lt;br&gt;回合最终成功；BCE；权重 0.05" vertex="1">
+          <mxGeometry height="160" width="440" x="40" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="success" value="">
+          <mxGeometry relative="1" x="0.0548" as="geometry">
+            <Array as="points">
+              <mxPoint x="1410" y="430" />
+              <mxPoint x="260" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="checkpoint" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="checkpoint_head&lt;br&gt;Linear 2048→1 → squeeze → sigmoid&lt;br&gt;[B,2048] → [B,1] → [B]&lt;br&gt;中间检查点；BCE；权重 0.001" vertex="1">
+          <mxGeometry height="160" width="440" x="580" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="checkpoint" value="">
+          <mxGeometry relative="1" x="0.1709" as="geometry">
+            <Array as="points">
+              <mxPoint x="1480" y="360" />
+              <mxPoint x="800" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="garment" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="garment_type_head&lt;br&gt;Linear 2048→4 → softmax / argmax&lt;br&gt;logits [B,4]；推理类别 [B]&lt;br&gt;4 类衣物；交叉熵；权重 0.02" vertex="1">
+          <mxGeometry height="160" width="440" x="1120" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="garment" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="completion" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="completion_head&lt;br&gt;Linear 2048→1 → squeeze → sigmoid&lt;br&gt;[B,2048] → [B,1] → [B]&lt;br&gt;成功回合进度 t/T；MSE；权重 0.02" vertex="1">
+          <mxGeometry height="160" width="440" x="40" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="completion" value="">
+          <mxGeometry relative="1" x="-0.0863" as="geometry">
+            <Array as="points">
+              <mxPoint x="1220" y="380" />
+              <mxPoint x="1070" y="380" />
+              <mxPoint x="1070" y="660" />
+              <mxPoint x="260" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ttc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="ttc_head&lt;br&gt;Linear 2048→1 → squeeze → sigmoid&lt;br&gt;[B,2048] → [B,1] → [B]&lt;br&gt;TD/解析 TTC 目标；MSE；权重 0.05" vertex="1">
+          <mxGeometry height="160" width="440" x="580" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="ttc" value="">
+          <mxGeometry relative="1" x="-0.0674" as="geometry">
+            <Array as="points">
+              <mxPoint x="1280" y="410" />
+              <mxPoint x="1100" y="410" />
+              <mxPoint x="1100" y="790" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keypoint" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="keypoint_distance_head&lt;br&gt;Linear 2048→21；无激活&lt;br&gt;[B,2048] → [B,21]&lt;br&gt;距离 / 阈值；masked MSE；权重 0.02" vertex="1">
+          <mxGeometry height="160" width="440" x="1120" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="keypoint" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1590" y="257.5" />
+              <mxPoint x="1590" y="790.0000000000002" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mask" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172b4d;fontSize=18;spacing=12;" value="关键点 21 槽位：top_long [0:5]；top_short [5:10]；pant_long [10:17]；pant_short [17:21]&lt;br&gt;预测 [B,21]，标签 [B,21]，有效掩码 [B,21]。只对当前衣物有标签的槽位计算误差，按有效槽位数归一。" vertex="1">
+          <mxGeometry height="100" width="1520" x="40" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="notes" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="当前查询看不到：关节状态、衣物类型输入、优势、FAST、动作后缀。因此分类不能直接复制输入类别。&lt;br&gt;实现：pi_modified.py:272–288（建头）、639–687（query/注意力）、951–1072（读出与损失）。" vertex="1">
+          <mxGeometry height="90" width="1520" x="40" y="1120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p3" name="03 FAST 未来头">
+    <mxGraphModel dx="2423" dy="1236" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1250" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=28;spacing=12;" value="§5.2 FAST 分支：用训练动作教前缀理解未来" vertex="1">
+          <mxGeometry height="55" width="1540" x="30" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="仅训练存在；FAST 未来查询与 FM 未来查询不共享参数。F=50 是填充后的序列槽位数，实际有效长度由 fast_token_mask 标识。" vertex="1">
+          <mxGeometry height="75" width="1540" x="30" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ids" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=18;spacing=12;" value="真实动作经 FAST tokenizer&lt;br&gt;fast_tokens：[B,F] int&lt;br&gt;词表 V=1024" vertex="1">
+          <mxGeometry height="115" width="440" x="40" y="207.5" as="geometry" />
+        </mxCell>
+        <mxCell id="shift" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=17;spacing=12;" value="右移输入：[0,BOS 后的前 F−1 个 token]&lt;br&gt;实际为 [0,tok₀,…,tokF−2]&lt;br&gt;Embed(1024,2048) → [B,F,2048]" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="concat" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=17;spacing=12;" value="前缀上下文 [B,783,2048]&lt;br&gt;+ FAST [B,50,2048] + query [B,1,2048]&lt;br&gt;→ [B,834,2048]" vertex="1">
+          <mxGeometry height="130" width="440" x="1120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ids" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="shift" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="shift" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="concat" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gemma" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="Gemma-2B → prefix_out [B,834,2048]&lt;br&gt;FAST 内部因果注意力&lt;br&gt;FAST query 看全部先前有效 token" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="concat" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="gemma" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="380" />
+              <mxPoint x="800" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fastloss" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=17;spacing=12;" value="FAST token 预测（辅助动作任务）&lt;br&gt;取位置 [783:833] → [B,50,2048]&lt;br&gt;Linear → [B,50,1024] → masked CE&lt;br&gt;目标：未右移 token [B,50]；权重 0.01" vertex="1">
+          <mxGeometry height="160" width="440" x="40" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="query" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=18;spacing=12;" value="wm_fast_hidden&lt;br&gt;prefix_out[:,833,:] → [B,2048]&lt;br&gt;查询在 FAST 后；早期 token 看不到它" vertex="1">
+          <mxGeometry height="160" width="440" x="580" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="trim" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172b4d;fontSize=17;spacing=12;" value="交给动作专家前删除位置 783:834&lt;br&gt;K/V [18,B,834,1,256]&lt;br&gt;→ [18,B,783,1,256]&lt;br&gt;防止专家读取真实动作的 FAST 编码" vertex="1">
+          <mxGeometry height="160" width="440" x="1120" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="gemma" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="fastloss" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="gemma" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="query" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="gemma" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="trim" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="wm_fast_success_head&lt;br&gt;Linear 2048→1 → sigmoid → [B]&lt;br&gt;目标：回合结果（可平滑），不是30帧内成功&lt;br&gt;BCE；权重 0.01" vertex="1">
+          <mxGeometry height="160" width="440" x="40" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="s" value="">
+          <mxGeometry relative="1" x="-0.2222" as="geometry">
+            <Array as="points">
+              <mxPoint x="680" y="830" />
+              <mxPoint x="260" y="830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="wm_fast_completion_head&lt;br&gt;Linear 2048→1 → sigmoid → [B]&lt;br&gt;目标：未来 t+30 的完成度&lt;br&gt;MSE；权重 0.01" vertex="1">
+          <mxGeometry height="160" width="440" x="580" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="c" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="k" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="wm_fast_keypoint_head&lt;br&gt;Linear 2048→21 → [B,21]&lt;br&gt;目标：未来 t+30 的关键点距离比&lt;br&gt;masked MSE；权重 0.01" vertex="1">
+          <mxGeometry height="160" width="440" x="1120" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="k" value="">
+          <mxGeometry relative="1" x="-0.1379" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="830" />
+              <mxPoint x="1340" y="830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="src" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="实现：embed_prefix:700–738；FAST token CE:1075–1116；FAST 未来头:1124–1167；缓存裁剪:1173–1189。&lt;br&gt;success_future_target 直接复制 success_target（transforms.py:395–436），完成度与距离才使用未来帧标签。" vertex="1">
+          <mxGeometry height="90" width="1520" x="40" y="1120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p4" name="04 FM 未来头">
+    <mxGraphModel dx="2014" dy="1028" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1250" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=28;spacing=12;" value="§5.2 FM 分支：同一次动作专家前向，同时产生动作速度和动作评分" vertex="1">
+          <mxGeometry height="55" width="1540" x="30" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="τ=流匹配噪声时间，t=环境帧索引。训练 xτ=τ·ε+(1−τ)·a，目标速度 uτ=ε−a；τ=0 干净，τ=1 纯噪声。" vertex="1">
+          <mxGeometry height="75" width="1540" x="30" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="x" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;" value="动作 a、噪声 ε：[B,30,12]&lt;br&gt;xτ：[B,30,12]&lt;br&gt;action_in_proj：12→1024" vertex="1">
+          <mxGeometry height="130" width="440" x="40" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="suffix" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;" value="动作嵌入 [B,30,1024]&lt;br&gt;+ wm_flow_query_token [B,1,1024]&lt;br&gt;后缀 [B,31,1024]" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="condition" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="AdaRMS 条件 c：[B,1024]&lt;br&gt;时间 sin/cos + MLP；衣物 Embed&lt;br&gt;+ 按 advantage_mask 门控的优势向量" vertex="1">
+          <mxGeometry height="130" width="440" x="1120" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="x" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="suffix" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kv" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;" value="清理并混合后的前缀 K/V&lt;br&gt;每个 [18,B,783,1,256]&lt;br&gt;后缀注意力 mask [B,31,814]" vertex="1">
+          <mxGeometry height="130" width="440" x="40" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="expert" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;" value="Gemma-300M，18 层&lt;br&gt;动作与 FM 查询双向注意力&lt;br&gt;后缀输出 [B,31,1024]" vertex="1">
+          <mxGeometry height="130" width="440" x="580" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="suffix" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="expert" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="condition" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="expert" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="kv" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="expert" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="v" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=17;spacing=12;" value="前 30 位：[B,30,1024]&lt;br&gt;action_out_proj 1024→12&lt;br&gt;vτ [B,30,12]；MSE(vτ, ε−a)&lt;br&gt;推理 xτ+Δτ=xτ+Δτ·vτ" vertex="1">
+          <mxGeometry height="165" width="440" x="40" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="h" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="末位 suffix_out[:,-1,:]&lt;br&gt;h_FM：[B,1024]&lt;br&gt;训练读含噪动作；推理读当前去噪迭代&lt;br&gt;不是先生成完整动作后再独立评分" vertex="1">
+          <mxGeometry height="165" width="440" x="580" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="baseline" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172b4d;fontSize=17;spacing=12;" value="当前成功基线 V̂：[B]&lt;br&gt;Δtarget = y − stop_gradient(V̂)&lt;br&gt;y = success_future_target [B]&lt;br&gt;目标可为平滑标签；只截断基线分支" vertex="1">
+          <mxGeometry height="165" width="440" x="1120" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="expert" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="v" value="">
+          <mxGeometry relative="1" x="-0.1228" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="580" />
+              <mxPoint x="260" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="expert" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="h" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="wm_flow_success_head&lt;br&gt;Linear 1024→1 → squeeze → [B]&lt;br&gt;无 sigmoid：输出 Δsuccess，可正可负&lt;br&gt;MSE(Δpred, Δtarget)；权重 0.1" vertex="1">
+          <mxGeometry height="160" width="440" x="40" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="s" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="732.5" />
+              <mxPoint x="550" y="980" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="wm_flow_completion_head&lt;br&gt;Linear 1024→1 → sigmoid → [B]&lt;br&gt;未来完成度，MSE&lt;br&gt;权重 0.05" vertex="1">
+          <mxGeometry height="160" width="440" x="580" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="c" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="k" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;" value="wm_flow_keypoint_head&lt;br&gt;Linear 1024→21 → [B,21]&lt;br&gt;未来关键点距离，masked MSE&lt;br&gt;权重 0.02" vertex="1">
+          <mxGeometry height="160" width="440" x="1120" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="h" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;" target="k" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="732.5" />
+              <mxPoint x="1070" y="980" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" source="baseline" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;dashed=1;" target="s" value="目标">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="850" />
+              <mxPoint x="260" y="850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="weight" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;" value="三个 FM 未来损失都乘 w(τ)=(1−τ)·1[τ≤0.5]；每个样本按有效 flow 次数求平均。&lt;br&gt;5 次 flow 采样：动作误差 [5,B,30,12]；每个 FM 辅助误差 [5,B]。最终 WM 评分读最后一次迭代（10 步时 τ≈0.1）。" vertex="1">
+          <mxGeometry height="90" width="1520" x="40" y="1120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p5" name="05 注意力与梯度">
+    <mxGraphModel dx="1600" dy="1250" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1600" pageHeight="1250" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="注意力、训练监督与推理接口" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=28;spacing=12;">
+          <mxGeometry as="geometry" x="30" y="20" width="1540" height="55" />
+        </mxCell>
+        <mxCell id="subtitle" value="本页的虚线只表示监督/梯度关系；其他页实线表示张量流向。当前/FAST/FM 查询是三个独立可学习 token。" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="30" y="90" width="1540" height="75" />
+        </mxCell>
+        <mxCell id="attn" value="注意力可见性（行=读取者，列=被读取者）&lt;br&gt;列：图像+当前query | 状态+衣物 | 优势 | FAST | FAST query | 动作+FM query&lt;br&gt;图像+当前query：  是 | 否 | 否 | 否 | 否 | 否&lt;br&gt;状态+衣物：          是 | 是 | 否 | 否 | 否 | 否&lt;br&gt;优势：                   是 | 是 | 是 | 否 | 否 | 否&lt;br&gt;FAST：                  是 | 是 | 是 | 因果 | 否 | 否&lt;br&gt;FAST query：          是 | 是 | 是 | 是 | 是 | 否&lt;br&gt;动作+FM query：     是 | 是 | 是 | 否 | 否 | 双向&lt;br&gt;以上还需叠加有效 token 掩码和按样本的优势遮蔽。" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=19;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="200" width="1520" height="300" />
+        </mxCell>
+        <mxCell id="grad" value="梯度：完整仿真配置&lt;br&gt;use_knowledge_insulation=False&lt;br&gt;当前/FAST损失 → 前缀 VLM&lt;br&gt;FM损失 → 专家 → KVTransform → VLM&lt;br&gt;SigLIP 主干冻结；投影头配置可单独训练" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="550" width="440" height="185" />
+        </mxCell>
+        <mxCell id="stop" value="只有残差目标基线显式 stop_gradient&lt;br&gt;y − sg(V̂) 不通过目标推动 success_head&lt;br&gt;共享骨干仍会收到其他路径梯度&lt;br&gt;若开启 knowledge_insulation，则另在&lt;br&gt;KVTransform 之前停止专家→VLM梯度" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="580" y="550" width="440" height="185" />
+        </mxCell>
+        <mxCell id="loss" value="总训练损失&lt;br&gt;动作 MSE + FAST CE + 加权辅助损失&lt;br&gt;各辅助损失先处理标签有效性&lt;br&gt;再做 IS 权重 / 衣物类别平衡等聚合&lt;br&gt;最终组合在 scripts/train.py:400–574" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="1120" y="550" width="440" height="185" />
+        </mxCell>
+        <mxCell id="prefix" value="推理：B 个不同观测&lt;br&gt;VLM 前缀只跑一次&lt;br&gt;K/V [18,B,783,1,256]&lt;br&gt;当前标量 [B] / 距离 [B,21]" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="820" width="440" height="160" />
+        </mxCell>
+        <mxCell id="candidates" value="N 候选：沿 batch 轴复制缓存&lt;br&gt;K/V [18,B·N,783,1,256]&lt;br&gt;独立初噪声 [B·N,30,12]&lt;br&gt;循环去噪；3 个 FM 头随迭代更新" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="580" y="820" width="440" height="160" />
+        </mxCell>
+        <mxCell id="choose" value="best-of-N 评分与选择&lt;br&gt;Δcond、Δuncond 各 [B·N]&lt;br&gt;score=(Δcond+Δuncond)/2 → [B,N]&lt;br&gt;每个观测选最高分候选 → [B,30,12]" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="1120" y="820" width="440" height="160" />
+        </mxCell>
+        <mxCell id="e11" value="" edge="1" parent="1" source="prefix" target="candidates" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e12" value="" edge="1" parent="1" source="candidates" target="choose" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="notes" value="没有 CFG 时 uncond 复制 cond。最终关键点输出仍为 [B,21]；sigmoid 标量仍为 [B]。&lt;br&gt;未来成功不是“30 帧内能否完成”；预测的是整回合结果。网络不输出未来 RGB 或显式物理状态，也没有像素重建解码器。&lt;br&gt;源码：training/config.py:680；pi_modified.py:1200 / 1285 / 1540；shared/eval_wrapper.py:215。" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="1050" width="1520" height="145" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p6" name="06 骨干内部接口">
+    <mxGraphModel dx="1600" dy="1250" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1600" pageHeight="1250" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="骨干内部：为什么 2048 维前缀可以供 1024 维专家读取？" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=28;spacing=12;">
+          <mxGeometry as="geometry" x="30" y="20" width="1540" height="55" />
+        </mxCell>
+        <mxCell id="subtitle" value="标准 Gemma-2B / Gemma-300M：18 层，8 个 Q heads，1 个 KV head，head_dim=256。两端的隐藏宽度不同，但注意力 head 接口相同。" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="30" y="90" width="1540" height="75" />
+        </mxCell>
+        <mxCell id="prefix" value="前缀层输入 Xp [B,Lp,2048]&lt;br&gt;RMSNorm → 同形&lt;br&gt;Lp=834（训练）或 783（推理）" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="200" width="440" height="130" />
+        </mxCell>
+        <mxCell id="pqkv" value="Qp [B,Lp,8,256]&lt;br&gt;Kp、Vp 各 [B,Lp,1,256]&lt;br&gt;RoPE / mask 保持张量轴长度" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="580" y="200" width="440" height="130" />
+        </mxCell>
+        <mxCell id="pout" value="前缀注意力输出 [B,Lp,2048]&lt;br&gt;残差 + Norm + gated FFN&lt;br&gt;2048 → 16384 → 2048，形状复原" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="1120" y="200" width="440" height="130" />
+        </mxCell>
+        <mxCell id="e7" value="" edge="1" parent="1" source="prefix" target="pqkv" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e8" value="" edge="1" parent="1" source="pqkv" target="pout" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="cache" value="每层存 Kp/Vp；堆叠 18 层&lt;br&gt;训练删尾后：[18,B,783,1,256]&lt;br&gt;KVTransform 的层混合矩阵 [18,18]&lt;br&gt;输出同形，不把 2048 直接映射到 1024" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="580" y="420" width="440" height="165" />
+        </mxCell>
+        <mxCell id="e10" value="" edge="1" parent="1" source="pqkv" target="cache" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="sx" value="专家层输入 Xs [B,31,1024]&lt;br&gt;AdaRMS 条件 c [B,1024]&lt;br&gt;Linear(c)→[B,3072]→scale/shift/gate&lt;br&gt;各 [B,1,1024]，广播到31个token" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=17;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="650" width="440" height="165" />
+        </mxCell>
+        <mxCell id="sqkv" value="Qs [B,31,8,256]&lt;br&gt;Ks、Vs 各 [B,31,1,256]&lt;br&gt;拼上该层 prefix K/V 后：&lt;br&gt;K、V 各 [B,814,1,256]" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="580" y="650" width="440" height="165" />
+        </mxCell>
+        <mxCell id="attn" value="GQA 注意力（8 Q / 1 KV）&lt;br&gt;分数概念形状 [B,8,31,814]&lt;br&gt;聚合 V → [B,31,8,256]&lt;br&gt;输出投影 → [B,31,1024]" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="1120" y="650" width="440" height="165" />
+        </mxCell>
+        <mxCell id="e14" value="" edge="1" parent="1" source="sx" target="sqkv" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e15" value="" edge="1" parent="1" source="cache" target="sqkv" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e16" value="" edge="1" parent="1" source="sqkv" target="attn" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="ffn" value="门控残差 + AdaRMS + gated FFN&lt;br&gt;[B,31,1024] → [B,31,4096]&lt;br&gt;→ [B,31,1024] → 门控残差&lt;br&gt;18 层后 final norm；再拆动作与 FM query" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="1120" y="920" width="440" height="170" />
+        </mxCell>
+        <mxCell id="e18" value="" edge="1" parent="1" source="attn" target="ffn" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#526579;fontSize=15;labelBackgroundColor=#ffffff;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="source" value="接口依据：仓库固定的 openpi 提交&lt;br&gt;c23745b5ad24e98f66967ea795a07b2588ed6c79&lt;br&gt;src/openpi/models/gemma.py&lt;br&gt;Flash/XSA 实现可能不显式物化完整分数矩阵；这里标逻辑形状。" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#172b4d;fontSize=18;spacing=12;">
+          <mxGeometry as="geometry" x="40" y="920" width="980" height="170" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
