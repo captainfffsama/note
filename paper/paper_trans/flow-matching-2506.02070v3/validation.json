@@ -1,0 +1,29 @@
+{
+  "en": {
+    "math": 1594,
+    "formulaCorrespondence": true,
+    "tables": 13,
+    "headings": 81,
+    "anchors": 226,
+    "images": 25,
+    "uniqueImages": 25,
+    "missingTargets": [],
+    "missingImages": [],
+    "nonrelativeImages": [],
+    "unresolvedPlaceholders": false
+  },
+  "zh": {
+    "math": 1594,
+    "formulaCorrespondence": true,
+    "tables": 13,
+    "headings": 81,
+    "anchors": 226,
+    "images": 25,
+    "uniqueImages": 25,
+    "missingTargets": [],
+    "missingImages": [],
+    "nonrelativeImages": [],
+    "unresolvedPlaceholders": false
+  },
+  "mathErrors": []
+}
